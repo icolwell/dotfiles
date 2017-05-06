@@ -1,0 +1,55 @@
+"*":
+  "autocomplete-clang":
+    clangCommand: "clang-3.5"
+  "clang-format":
+    formatCOnSave: false
+    formatCPlusPlusOnSave: false
+  core:
+    disabledPackages: [
+      "autocomplete-snippets"
+      "linter-cpplint"
+      "autocomplete-atom-api"
+      "minimap"
+      "linter-shellcheck"
+      "activate-power-mode"
+    ]
+    telemetryConsent: "no"
+  editor:
+    showInvisibles: true
+    tabLength: 4
+  "exception-reporting":
+    userId: "d3d9a1ba-9434-12d6-c4ba-691a7b4b9924"
+  "linter-clang": {}
+  "linter-pylint":
+    executablePath: "/usr/bin/clang++-3.5"
+  "linter-shellcheck":
+    shellcheckExecutablePath: "/home/ian/.cabal/bin/shellcheck"
+  "linter-ui-default":
+    showPanel: true
+  minimap:
+    displayMinimapOnLeft: true
+  "remote-edit":
+    storePasswordsUsingKeytar: true
+  welcome:
+    showOnStartup: false
+".bat.cmake.source.template":
+  editor:
+    tabLength: 4
+".c.cmake.source.template":
+  editor:
+    tabLength: 4
+".cache.cmake.source":
+  editor:
+    tabLength: 4
+".cmake.cpp.source.template":
+  editor:
+    tabLength: 4
+".cmake.shell.source.template":
+  editor:
+    tabLength: 4
+".cmake.source":
+  editor:
+    tabLength: 4
+".cmake.source.template":
+  editor:
+    tabLength: 4
