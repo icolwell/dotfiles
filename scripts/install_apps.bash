@@ -73,6 +73,7 @@ install_extras()
 		filezilla
 		gpsprune
 		inkscape
+		josm
 		nautilus-dropbox
 		octave
 		opera-stable
