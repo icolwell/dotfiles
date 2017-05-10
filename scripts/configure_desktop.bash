@@ -24,7 +24,7 @@ check_apps()
 	if [ -d $TB_PROFILE_DIR ] && hash thunderbird 2>/dev/null ; then
 		AP_THUNDERBIRD=1
 	else
-		echo "Warning, no thunderbird profile named $TB_PROFILE exists, skipping thunderbird configuration"
+		echo "Warning: no thunderbird profile named $TB_PROFILE exists, skipping thunderbird configuration"
 	fi
 }
 
@@ -76,6 +76,11 @@ setup_configs()
 {
 	# Loop over config folder and link config files
 	# $1 = Full path to directory containing config files
+	if [ ! -d "$1" ]; then
+		echo "Warning: The following config directory was not found, skipping this directory."
+		echo "$1"
+		return 0
+	fi
 
 	configs=()
 
