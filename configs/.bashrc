@@ -161,7 +161,7 @@ application_specific()
 	source_file ~/catkin_ws/devel/setup.bash
 
 	# anm_sim
-	source_file ~/anm_sim/vrep_test_suite/scripts/test_suite_lib.bash
+	source_file ~/git/anm_sim/vrep_test_suite/scripts/test_suite_lib.bash
 
 	# V-REP
 	export VREP_ROOT=$HOME/opt/vrep/V-REP_PRO_EDU_V3_4_0_Linux

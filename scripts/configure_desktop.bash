@@ -31,8 +31,6 @@ check_apps()
 remove_stuff()
 {
 	# Remove any existing links or files
-	rm -f ~/.profile
-
 	if [[ -n $AP_THUNDERBIRD ]]; then
 		rm -f ~/.thunderbird/Ian/ImapMail/imap-mail.outlook.com/msgFilterRules.dat
 		rm -f ~/.thunderbird/Ian/ImapMail/imap.gmail.com/msgFilterRules.dat
