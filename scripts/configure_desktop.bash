@@ -3,8 +3,9 @@ set -e
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 REPO_DIR="$(dirname "$SCRIPT_DIR")"
-PUB_CONFIGS_DIR="$REPO_DIR/configs"
-PRIV_CONFIGS_DIR="$HOME/Dropbox/dotfiles/configs"
+PUB_HOME_CONFIGS_DIR="$REPO_DIR/configs/home"
+PRIV_HOME_CONFIGS_DIR="$HOME/Dropbox/dotfiles/configs"
+PUB_ROOT_CONFIGS_DIR="$REPO_DIR/configs/root"
 
 main()
 {
@@ -53,8 +54,12 @@ link_stuff()
 		ln -sf "$HOME/Dropbox/dotfiles/thunderbird/connect.uwaterloo.ca/msgFilterRules.dat" ~/.thunderbird/Ian/ImapMail/connect.uwaterloo.ca/msgFilterRules.dat
 	fi
 
-	setup_configs "$PUB_CONFIGS_DIR"
-	setup_configs "$PRIV_CONFIGS_DIR"
+	# $HOME directory configs
+	setup_configs "$PUB_HOME_CONFIGS_DIR" "$HOME"
+	setup_configs "$PRIV_HOME_CONFIGS_DIR" "$HOME"
+
+	# Root directory configs
+	setup_configs "$PUB_ROOT_CONFIGS_DIR" ""
 
 	echo "Symlinks created successfully."
 }
@@ -63,17 +68,26 @@ link_config()
 {
 	# $1 = Relative path to file from config root dir
 	# $2 = Full path to config root dir
-	LINK="$HOME$1"
+	# $3 = Full path to destination root dir
+	LINK="$3$1"
 
-	mkdir -p "$(dirname "$LINK")"
-	rm -f "$LINK"
-	ln -sf "$2$1" "$LINK"
+	# Add sudo command if the folder is owned by root
+	CONTAINING_DIR=$(dirname "$LINK")
+	prefix=""
+	if [ "$(stat -c '%U' "$CONTAINING_DIR")" == "root" ]; then
+		prefix="sudo"
+	fi
+
+	$prefix mkdir -p "$CONTAINING_DIR"
+	$prefix rm -f "$LINK"
+	$prefix ln -sf "$2$1" "$LINK"
 }
 
 setup_configs()
 {
 	# Loop over config folder and link config files
 	# $1 = Full path to directory containing config files
+	# $2 = Full path to destination root dir
 	if [ ! -d "$1" ]; then
 		echo "Warning: The following config directory was not found, skipping this directory."
 		echo "$1"
@@ -90,7 +104,7 @@ setup_configs()
 	done < <(find . -type f -print0)
 
 	for config in "${configs[@]}"; do
-		link_config "$config" "$1"
+		link_config "$config" "$1" "$2"
 	done
 }
 
