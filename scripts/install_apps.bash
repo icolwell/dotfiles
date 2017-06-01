@@ -75,6 +75,7 @@ install_extras()
 		gpsprune
 		inkscape
 		josm
+		lm-sensor
 		nautilus-dropbox
 		octave
 		opera-stable
