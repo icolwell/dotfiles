@@ -26,6 +26,7 @@ repository_additions()
 	sudo add-apt-repository multiverse
 	sudo add-apt-repository -y ppa:webupd8team/atom
 	sudo add-apt-repository -y ppa:thomas-schiex/blender
+	sudo add-apt-repository -y ppa:minecraft-installer-peeps/minecraft-installer
 
 	# Spotify
 	sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886
@@ -76,6 +77,7 @@ install_extras()
 		inkscape
 		josm
 		lm-sensor
+		minecraft-installer
 		nautilus-dropbox
 		octave
 		opera-stable
@@ -111,6 +113,7 @@ install_extras()
 		linter-cpplint
 		language-lua
 		language-cmake
+		merge-conflicts
 		minimap
 		remote-edit
 	)

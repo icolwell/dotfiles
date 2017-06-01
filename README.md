@@ -11,18 +11,19 @@ possible that they no longer work for 14.04 or other versions.
 ## Folder Structure
 
 I designed the folder structure to be as simple as possible. Since all user
-configs reside somewhere under your `$HOME` directory, the `configs` folder in
+configs reside somewhere under your `$HOME` directory, the `configs/home` folder in
 this repo contains all configs relative to the `$HOME` directory. This means a
-script can simply loop over all the files found in the `configs` folder and know
+script can simply loop over all the files found in the `configs/home` folder and know
 where to symlink them relative to your `$HOME` directory. Another benefit is
 that you can easily separate private configs (such as your `.ssh/config`) by
 simply storing them in another location with the same folder structure (Dropbox
-for example).
+for example). System configs are handled the same way. These are stored in the
+`configs/root` folder and are symlinked relative to root (`/`).
 
 ## Scripts
 
 **configure_desktop.bash**  
-Symlinks any configs found in the `config` folder or any other private folders
+Symlinks any configs found in the `configs` folder or any other private folders
 you specify. Configuration of Thunderbird, unity and vim is also performed
 (Credit for any Vim configs/setup in this repo goes to [chutsu](https://github.com/chutsu/dotfiles)).
 

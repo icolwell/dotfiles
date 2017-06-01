@@ -149,7 +149,6 @@ define_aliases()
 	alias clang++=clang++-3.5
 	alias clang=clang-3.5
 	alias sbrc='source ~/.bashrc'
-	alias e='exit'
 	alias clr='clear'
 }
 
@@ -163,7 +162,7 @@ application_specific()
 	export QNXROS_WS="$HOME/qnx_catkin_ws"
 
 	# anm_sim
-	source_file ~/anm_sim/vrep_test_suite/scripts/test_suite_lib.bash
+	source_file ~/git/anm_sim/vrep_test_suite/scripts/test_suite_lib.bash
 
 	# V-REP
 	export VREP_ROOT=$HOME/opt/vrep/V-REP_PRO_EDU_V3_4_0_Linux
@@ -173,6 +172,9 @@ application_specific()
 
 	# cabal
 	PATH="$PATH:$HOME/.cabal/bin"
+
+	# pip packages
+	PATH=$PATH:~/.local/bin
 
 	# Other
 	[ -f ~/.fzf.bash ] && source ~/.fzf.bash
