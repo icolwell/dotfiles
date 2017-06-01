@@ -53,6 +53,7 @@ install_core()
 		gparted
 		jstest-gtk
 		screen
+		ssh
 		tmux
 		tree
 		traceroute
@@ -77,6 +78,7 @@ install_extras()
 		nautilus-dropbox
 		octave
 		opera-stable
+		pavucontrol
 		pinta
 		python-pip
 		redshift
