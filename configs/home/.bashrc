@@ -149,7 +149,6 @@ define_aliases()
 	alias clang++=clang++-3.5
 	alias clang=clang-3.5
 	alias sbrc='source ~/.bashrc'
-	alias e='exit'
 	alias clr='clear'
 }
 
@@ -171,6 +170,9 @@ application_specific()
 
 	# cabal
 	PATH="$PATH:$HOME/.cabal/bin"
+
+	# pip packages
+	PATH=$PATH:~/.local/bin
 
 	# Other
 	[ -f ~/.fzf.bash ] && source ~/.fzf.bash

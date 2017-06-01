@@ -1,0 +1,6 @@
+#!/bin/bash
+set -e
+clear
+
+echo "Welcome $USER!"
+/usr/lib/update-notifier/apt-check --human-readable
