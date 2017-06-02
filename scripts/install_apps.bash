@@ -54,6 +54,7 @@ install_core()
 		gparted
 		jstest-gtk
 		screen
+		ssh
 		tmux
 		tree
 		traceroute
@@ -75,10 +76,12 @@ install_extras()
 		gpsprune
 		inkscape
 		josm
+		lm-sensor
 		minecraft-installer
 		nautilus-dropbox
 		octave
 		opera-stable
+		pavucontrol
 		pinta
 		python-pip
 		redshift

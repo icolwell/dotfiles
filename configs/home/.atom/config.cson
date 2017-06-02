@@ -12,6 +12,9 @@
       "minimap"
       "linter-shellcheck"
       "activate-power-mode"
+      "clang-format"
+      "autocomplete-clang"
+      "linter-clang"
     ]
     telemetryConsent: "no"
   editor:
