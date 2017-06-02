@@ -9,35 +9,15 @@ PUB_ROOT_CONFIGS_DIR="$REPO_DIR/configs/root"
 
 main()
 {
-	check_apps
 	remove_stuff
 	link_stuff
 	setup_vim
+	configure_thunderbird
 	configure_gsettings
-}
-
-check_apps()
-{
-	# Thunderbird
-	TB_PROFILE='Ian'
-	TB_PROFILE_DIR="$HOME/.thunderbird/$TB_PROFILE"
-	AP_THUNDERBIRD=
-	if [ -d $TB_PROFILE_DIR ] && hash thunderbird 2>/dev/null ; then
-		AP_THUNDERBIRD=1
-	else
-		echo "Warning: no thunderbird profile named $TB_PROFILE exists, skipping thunderbird configuration"
-	fi
 }
 
 remove_stuff()
 {
-	# Remove any existing links or files
-	if [[ -n $AP_THUNDERBIRD ]]; then
-		rm -f ~/.thunderbird/Ian/ImapMail/imap-mail.outlook.com/msgFilterRules.dat
-		rm -f ~/.thunderbird/Ian/ImapMail/imap.gmail.com/msgFilterRules.dat
-		rm -f ~/.thunderbird/Ian/ImapMail/connect.uwaterloo.ca/msgFilterRules.dat
-	fi
-
 	# Remove unused folders
 	rm -rf ~/Music
 	rm -rf ~/Videos
@@ -48,12 +28,6 @@ remove_stuff()
 
 link_stuff()
 {
-	if [[ -n $AP_THUNDERBIRD ]]; then
-		ln -sf "$HOME/Dropbox/dotfiles/thunderbird/imap-mail.outlook.com/msgFilterRules.dat" ~/.thunderbird/Ian/ImapMail/imap-mail.outlook.com/msgFilterRules.dat
-		ln -sf "$HOME/Dropbox/dotfiles/thunderbird/imap.gmail.com/msgFilterRules.dat" ~/.thunderbird/Ian/ImapMail/imap.gmail.com/msgFilterRules.dat
-		ln -sf "$HOME/Dropbox/dotfiles/thunderbird/connect.uwaterloo.ca/msgFilterRules.dat" ~/.thunderbird/Ian/ImapMail/connect.uwaterloo.ca/msgFilterRules.dat
-	fi
-
 	# $HOME directory configs
 	setup_configs "$PUB_HOME_CONFIGS_DIR" "$HOME"
 	setup_configs "$PRIV_HOME_CONFIGS_DIR" "$HOME"
@@ -123,6 +97,25 @@ setup_vim()
 	bash "$BUNDLE/fzf/install" --all >> /dev/null
 
 	echo "Vim setup updated."
+}
+
+configure_thunderbird()
+{
+	# Thunderbird
+	TB_PROFILE='Ian'
+	TB_PROFILE_DIR="$HOME/.thunderbird/$TB_PROFILE"
+	if [ -d $TB_PROFILE_DIR ] && hash thunderbird 2>/dev/null ; then
+		# Remove any existing links or files
+		rm -f ~/.thunderbird/Ian/ImapMail/imap-mail.outlook.com/msgFilterRules.dat
+		rm -f ~/.thunderbird/Ian/ImapMail/imap.gmail.com/msgFilterRules.dat
+		rm -f ~/.thunderbird/Ian/ImapMail/connect.uwaterloo.ca/msgFilterRules.dat
+
+		ln -sf "$HOME/Dropbox/dotfiles/thunderbird/imap-mail.outlook.com/msgFilterRules.dat" ~/.thunderbird/Ian/ImapMail/imap-mail.outlook.com/msgFilterRules.dat
+		ln -sf "$HOME/Dropbox/dotfiles/thunderbird/imap.gmail.com/msgFilterRules.dat" ~/.thunderbird/Ian/ImapMail/imap.gmail.com/msgFilterRules.dat
+		ln -sf "$HOME/Dropbox/dotfiles/thunderbird/connect.uwaterloo.ca/msgFilterRules.dat" ~/.thunderbird/Ian/ImapMail/connect.uwaterloo.ca/msgFilterRules.dat
+	else
+		echo "Warning: no thunderbird profile named $TB_PROFILE exists, skipping thunderbird configuration"
+	fi
 }
 
 configure_gsettings()
