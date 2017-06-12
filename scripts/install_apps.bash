@@ -77,6 +77,7 @@ install_extras()
 		inkscape
 		josm
 		lm-sensor
+		mercurial
 		minecraft-installer
 		nautilus-dropbox
 		octave
@@ -95,6 +96,7 @@ install_extras()
 		texstudio
 		virtualbox
 		vlc
+		wireshark
 	)
 	sudo apt-get -y install "${APPS[@]}"
 
