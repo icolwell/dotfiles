@@ -34,7 +34,7 @@ repository_additions()
 
 	# Opera
 	wget -O - http://deb.opera.com/archive.key | sudo apt-key add -
-	echo 'deb http://deb.opera.com/opera-stable/ stable non-free' | sudo tee /etc/apt/sources.list.d/opera.list
+	echo 'deb https://deb.opera.com/opera-stable/ stable non-free' | sudo tee /etc/apt/sources.list.d/opera.list
 
 	echo "Updating package lists ..."
 	sudo apt-get update -qq
@@ -76,7 +76,7 @@ install_extras()
 		gpsprune
 		inkscape
 		josm
-		lm-sensor
+		lm-sensors
 		mercurial
 		minecraft-installer
 		nautilus-dropbox
