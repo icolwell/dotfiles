@@ -36,6 +36,10 @@ repository_additions()
 	wget -O - http://deb.opera.com/archive.key | sudo apt-key add -
 	echo 'deb https://deb.opera.com/opera-stable/ stable non-free' | sudo tee /etc/apt/sources.list.d/opera.list
 
+	# Syncthing
+	curl -s https://syncthing.net/release-key.txt | sudo apt-key add -
+	echo "deb https://apt.syncthing.net/ syncthing stable" | sudo tee /etc/apt/sources.list.d/syncthing.list
+
 	echo "Updating package lists ..."
 	sudo apt-get update -qq
 }
@@ -90,6 +94,7 @@ install_extras()
 		skype
 		spotify-client
 		steam
+		syncthing
 		texlive
 		texlive-latex-extra
 		texlive-science
