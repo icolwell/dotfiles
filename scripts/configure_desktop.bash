@@ -3,9 +3,11 @@ set -e
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 REPO_DIR="$(dirname "$SCRIPT_DIR")"
-PUB_HOME_CONFIGS_DIR="$REPO_DIR/configs/home"
-PRIV_HOME_CONFIGS_DIR="$HOME/Dropbox/dotfiles/configs"
-PUB_ROOT_CONFIGS_DIR="$REPO_DIR/configs/root"
+
+# Paths to config locations
+PUBLIC_CONFIGS_DIR="$REPO_DIR/configs"
+PRIVATE_CONFIGS_DIR="$HOME/sync/dotfiles/common_configs"
+SYSTEM_CONFIGS_DIR="$HOME/sync/dotfiles/sys_specific_configs/$HOSTNAME"
 
 main()
 {
@@ -30,13 +32,12 @@ remove_stuff()
 link_stuff()
 {
 	# $HOME directory configs
-	setup_configs "$PUB_HOME_CONFIGS_DIR" "$HOME"
-	setup_configs "$PRIV_HOME_CONFIGS_DIR" "$HOME"
-
-	# Root directory configs
-	setup_configs "$PUB_ROOT_CONFIGS_DIR" ""
+	process_config_dir "$PUBLIC_CONFIGS_DIR"
+	process_config_dir "$PRIVATE_CONFIGS_DIR"
+	process_config_dir "$SYSTEM_CONFIGS_DIR"
 
 	echo "Symlinks created successfully."
+	echo ""
 }
 
 link_config()
@@ -58,6 +59,20 @@ link_config()
 	$prefix ln -sf "$2$1" "$LINK"
 }
 
+process_config_dir()
+{
+	# This function takes in a directory and looks for both the root and home
+	# folders which are then used to link configs
+	# $1 = Full path to directory containing 'root' and 'home' configs
+
+	if [ -d "$1/home" ]; then
+		setup_configs "$1/home" "$HOME"
+	fi
+	if [ -d "$1/root" ]; then
+		setup_configs "$1/root" ""
+	fi
+}
+
 setup_configs()
 {
 	# Loop over config folder and link config files
@@ -65,9 +80,10 @@ setup_configs()
 	# $2 = Full path to destination root dir
 	if [ ! -d "$1" ]; then
 		echo "Warning: The following config directory was not found, skipping this directory."
-		echo "$1"
+		echo "	$1"
 		return 0
 	fi
+	echo "Linking configs found in $1 to $2"
 
 	configs=()
 
