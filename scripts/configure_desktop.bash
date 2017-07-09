@@ -14,6 +14,7 @@ main()
 	setup_vim
 	configure_thunderbird
 	configure_gsettings
+	configure_systemd
 }
 
 remove_stuff()
@@ -138,6 +139,16 @@ configure_gsettings()
 
 	# Default apps
 	xdg-settings set default-web-browser opera.desktop
+}
+
+configure_systemd()
+{
+	# Systemd does not allow symlinks which is quite frustrating
+	# We must place actual service files, not symlinks
+	mkdir -p ~/.config/systemd/user
+	wget -P ~/.config/systemd/user/ https://raw.githubusercontent.com/syncthing/syncthing/master/etc/linux-systemd/user/syncthing.service
+	systemctl --user enable syncthing.service
+	systemctl --user start syncthing.service
 }
 
 main
