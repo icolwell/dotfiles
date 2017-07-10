@@ -1,7 +1,8 @@
 #!/bin/bash
-set -e
+
 tput reset
 tmux clear-history
 
 echo "Welcome $USER!"
 /usr/lib/update-notifier/apt-check --human-readable
+echo ""
