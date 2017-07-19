@@ -92,9 +92,8 @@ install_extras()
 		python-pip
 		redshift
 		redshift-gtk
-		skype
 		spotify-client
-		steam
+		# steam
 		syncthing
 		texlive
 		texlive-latex-extra
