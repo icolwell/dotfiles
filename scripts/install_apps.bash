@@ -120,6 +120,7 @@ install_extras()
 		linter-cpplint
 		language-lua
 		language-cmake
+		markdown-pdf
 		minimap
 		remote-edit
 	)
