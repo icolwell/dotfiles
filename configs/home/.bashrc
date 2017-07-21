@@ -158,7 +158,7 @@ application_specific()
 	source_file /opt/ros/indigo/setup.bash
 	source_file /opt/ros/kinetic/setup.bash
 	source_file ~/catkin_ws/devel/setup.bash
-	source_file ~/ros-xcompile/scripts/build/qnxros.bash
+	source_file ~/git/renesas-demo/scripts/qnx/qnxros.bash
 	export QNXROS_WS="$HOME/qnx_catkin_ws"
 
 	# anm_sim
