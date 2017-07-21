@@ -34,7 +34,7 @@ repository_additions()
 
 	# Opera
 	wget -O - http://deb.opera.com/archive.key | sudo apt-key add -
-	echo 'deb https://deb.opera.com/opera-stable/ stable non-free' | sudo tee /etc/apt/sources.list.d/opera.list
+	echo 'deb https://deb.opera.com/opera-stable/ stable non-free' | sudo tee /etc/apt/sources.list.d/opera-stable.list
 
 	# Syncthing
 	curl -s https://syncthing.net/release-key.txt | sudo apt-key add -
@@ -83,8 +83,8 @@ install_extras()
 		josm
 		lm-sensors
 		mercurial
-		minecraft-installer
-		nautilus-dropbox
+		# minecraft-installer
+		# nautilus-dropbox
 		octave
 		opera-stable
 		pavucontrol
@@ -92,7 +92,7 @@ install_extras()
 		python-pip
 		redshift
 		redshift-gtk
-		spotify-client
+		# spotify-client
 		# steam
 		syncthing
 		texlive
