@@ -56,6 +56,7 @@ install_core()
 		ctags
 		expect
 		gparted
+		htop
 		jstest-gtk
 		screen
 		ssh
@@ -63,7 +64,7 @@ install_core()
 		tree
 		traceroute
 		vim
-		htop
+		xclip
 	)
 	sudo apt-get -y install "${APPS[@]}"
 }
@@ -91,9 +92,8 @@ install_extras()
 		python-pip
 		redshift
 		redshift-gtk
-		skype
 		spotify-client
-		steam
+		# steam
 		syncthing
 		texlive
 		texlive-latex-extra
@@ -120,7 +120,6 @@ install_extras()
 		linter-cpplint
 		language-lua
 		language-cmake
-		merge-conflicts
 		minimap
 		remote-edit
 	)

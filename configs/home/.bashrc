@@ -137,6 +137,12 @@ define_aliases()
 	alias gitc='git commit -m'
 	alias gitp='git pull'
 
+	# mercurial aliases
+	alias hgs='hg sum'
+	alias hga='hg add && hg sum'
+	alias hgc='hg commit -m'
+	alias hgp='hg pull'
+
 	# TMUX
 	alias tmux='tmux -2'
 
@@ -158,8 +164,8 @@ application_specific()
 	source_file /opt/ros/indigo/setup.bash
 	source_file /opt/ros/kinetic/setup.bash
 	source_file ~/catkin_ws/devel/setup.bash
-	source_file ~/git/renesas-demo/scripts/qnx/qnxros.bash
 	export QNXROS_WS="$HOME/qnx_catkin_ws"
+	source_file ~/git/renesas-demo/scripts/qnx/qnxros.bash
 
 	# anm_sim
 	source_file ~/git/anm_sim/vrep_test_suite/scripts/test_suite_lib.bash
