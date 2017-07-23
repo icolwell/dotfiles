@@ -25,7 +25,6 @@ remove_stuff()
 	rm -rf ~/Music
 	rm -rf ~/Videos
 	rm -rf ~/Templates
-	rm -rf ~/Pictures
 	rm -rf ~/Examples
 }
 
