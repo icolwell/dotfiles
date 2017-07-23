@@ -86,6 +86,7 @@ install_extras()
 		# minecraft-installer
 		# nautilus-dropbox
 		octave
+		openvpn
 		opera-stable
 		pavucontrol
 		pinta
