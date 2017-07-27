@@ -53,7 +53,7 @@ function! Vundle()
 endfunction
 
 function! StartUp()
-    autocmd VimEnter * NERDTree
+    autocmd VimEnter * if argc() == 0 | NERDTree | endif
 endfunction
 
 function! EditorAppearance()
