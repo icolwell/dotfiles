@@ -3,21 +3,109 @@ set -e
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+#------------------------------------------------------------------------------#
+# App lists
+
+# The 'core' is a collection of lightweight apps, these are installed when
+# time is too short for a full install
+CORE_APPS=(
+	clang
+	clang-format
+	ctags
+	expect
+	gparted
+	htop
+	jstest-gtk
+	screen
+	ssh
+	tmux
+	tree
+	traceroute
+	vim
+	xclip
+)
+
+MAIN_APPS=(
+	atom
+	android-tools-adb
+	default-jdk
+	default-jre
+	filezilla
+	gpsprune
+	inkscape
+	josm
+	lm-sensors
+	mercurial
+	octave
+	openvpn
+	opera-stable
+	pavucontrol
+	pinta
+	python-pip
+	syncthing
+	texlive
+	texlive-latex-extra
+	texlive-science
+	texstudio
+	virtualbox
+	vlc
+	wireshark
+)
+
+# Apps not usually needed on 'work' machines
+ENTERTAINMENT_APPS=(
+	minecraft-installer
+	nautilus-dropbox
+	spotify-client
+	steam
+)
+
+# This list is specifically for plugin packages for the Atom text editor
+ATOM_PACKAGES=(
+	atom-beautify
+	autocomplete-clang
+	busy-signal
+	clang-format
+	git-time-machine
+	intentions
+	linter
+	linter-ui-default
+	linter-clang
+	linter-shellcheck
+	linter-cpplint
+	language-lua
+	language-cmake
+	markdown-pdf
+	minimap
+	remote-edit
+)
+
+#------------------------------------------------------------------------------#
+# Main entry point of script
+
 main()
 {
+	# repository_additions
 	clear
-	if [ "$1" = '-c' ]; then
-		printf "Installing core apps only ...\n\n"
-		install_core
-		exit
-	fi
-
-	printf "Performing full installation ...\n\n"
-	repository_additions
-	install_core
-	install_extras
-
-	echo "Install finished successfully :D"
+	case "$1" in
+		-e)
+			echo "Installing entertainment apps only ..."
+			sudo apt-get -y install "${ENTERTAINMENT_APPS[@]}"
+			;;
+		-c)
+			echo "Installing core apps only ..."
+			sudo apt-get -y install "${CORE_APPS[@]}"
+			;;
+		-a)
+			echo "Installing all apps ..."
+			sudo apt-get -y install "${ENTERTAINMENT_APPS[@]}"
+			# Fall through
+			;;&
+		*)
+			echo "Installing core and main apps ..."
+			default_install
+			;;
+	esac
 }
 
 repository_additions()
@@ -44,87 +132,10 @@ repository_additions()
 	sudo apt-get update -qq
 }
 
-install_core()
+default_install()
 {
-	# The 'core' is a collection of lightweight apps, these are installed when
-	# time is too short for a full install
-
-	# Array of apps to install in alphabetical order
-	APPS=(
-		clang
-		clang-format
-		ctags
-		expect
-		gparted
-		htop
-		jstest-gtk
-		screen
-		ssh
-		tmux
-		tree
-		traceroute
-		vim
-		xclip
-	)
-	sudo apt-get -y install "${APPS[@]}"
-}
-
-install_extras()
-{
-	# Apps installed via apt-get
-	APPS=(
-		atom
-		android-tools-adb
-		default-jdk
-		default-jre
-		filezilla
-		gpsprune
-		inkscape
-		josm
-		lm-sensors
-		mercurial
-		# minecraft-installer
-		# nautilus-dropbox
-		octave
-		openvpn
-		opera-stable
-		pavucontrol
-		pinta
-		python-pip
-		redshift
-		redshift-gtk
-		# spotify-client
-		# steam
-		syncthing
-		texlive
-		texlive-latex-extra
-		texlive-science
-		texstudio
-		virtualbox
-		vlc
-		wireshark
-	)
-	sudo apt-get -y install "${APPS[@]}"
-
-	# Atom packages
-	ATOM_PACKAGES=(
-		atom-beautify
-		autocomplete-clang
-		busy-signal
-		clang-format
-		git-time-machine
-		intentions
-		linter
-		linter-ui-default
-		linter-clang
-		linter-shellcheck
-		linter-cpplint
-		language-lua
-		language-cmake
-		markdown-pdf
-		minimap
-		remote-edit
-	)
+	sudo apt-get -y install "${CORE_APPS[@]}"
+	sudo apt-get -y install "${MAIN_APPS[@]}"
 	install_atom_packages "${ATOM_PACKAGES[@]}"
 
 	# Other more complicated installations
@@ -132,17 +143,8 @@ install_extras()
 	install_ros
 }
 
-install_atom_packages()
-{
-	ARRAY=("$@")
-	for atmpkg in "${ARRAY[@]}"; do
-		if [[ ! -d "$HOME/.atom/packages/$atmpkg" ]]; then
-			apm install "$atmpkg"
-		else
-			echo "atom package $atmpkg is already installed"
-		fi
-	done
-}
+#------------------------------------------------------------------------------#
+# Custom Installs
 
 install_chrome()
 {
@@ -184,6 +186,21 @@ install_ros()
 		sudo rosdep init > /dev/null
 	fi
 	rosdep update > /dev/null
+}
+
+#------------------------------------------------------------------------------#
+# Utility functions
+
+install_atom_packages()
+{
+	ARRAY=("$@")
+	for atmpkg in "${ARRAY[@]}"; do
+		if [[ ! -d "$HOME/.atom/packages/$atmpkg" ]]; then
+			apm install "$atmpkg"
+		else
+			echo "atom package $atmpkg is already installed"
+		fi
+	done
 }
 
 not_installed() {

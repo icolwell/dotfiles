@@ -30,72 +30,12 @@ remove_stuff()
 
 link_stuff()
 {
-	# $HOME directory configs
 	process_config_dir "$PUBLIC_CONFIGS_DIR"
 	process_config_dir "$PRIVATE_CONFIGS_DIR"
 	process_config_dir "$SYSTEM_CONFIGS_DIR"
 
 	echo "Symlinks created successfully."
 	echo ""
-}
-
-link_config()
-{
-	# $1 = Relative path to file from config root dir
-	# $2 = Full path to config root dir
-	# $3 = Full path to destination root dir
-	LINK="$3$1"
-
-	# Add sudo command if the folder is owned by root
-	CONTAINING_DIR=$(dirname "$LINK")
-	prefix=""
-	if [ "$(stat -c '%U' "$CONTAINING_DIR")" == "root" ]; then
-		prefix="sudo"
-	fi
-
-	$prefix mkdir -p "$CONTAINING_DIR"
-	$prefix rm -f "$LINK"
-	$prefix ln -sf "$2$1" "$LINK"
-}
-
-process_config_dir()
-{
-	# This function takes in a directory and looks for both the root and home
-	# folders which are then used to link configs
-	# $1 = Full path to directory containing 'root' and 'home' configs
-
-	if [ -d "$1/home" ]; then
-		setup_configs "$1/home" "$HOME"
-	fi
-	if [ -d "$1/root" ]; then
-		setup_configs "$1/root" ""
-	fi
-}
-
-setup_configs()
-{
-	# Loop over config folder and link config files
-	# $1 = Full path to directory containing config files
-	# $2 = Full path to destination root dir
-	if [ ! -d "$1" ]; then
-		echo "Warning: The following config directory was not found, skipping this directory."
-		echo "	$1"
-		return 0
-	fi
-	echo "Linking configs found in $1 to $2"
-
-	configs=()
-
-	cd "$1"
-	while IFS=  read -r -d $'\0'; do
-		# Remove the leading .
-		string=${REPLY#*.}
-		configs+=("$string")
-	done < <(find . -type f -print0)
-
-	for config in "${configs[@]}"; do
-		link_config "$config" "$1" "$2"
-	done
 }
 
 setup_vim()
@@ -164,6 +104,68 @@ configure_systemd()
 	wget -P ~/.config/systemd/user/ https://raw.githubusercontent.com/syncthing/syncthing/master/etc/linux-systemd/user/syncthing.service
 	systemctl --user enable syncthing.service
 	systemctl --user start syncthing.service
+}
+
+#------------------------------------------------------------------------------#
+# Anything below this line should not require editing based on user preference
+
+link_config()
+{
+	# $1 = Relative path to file from config root dir
+	# $2 = Full path to config root dir
+	# $3 = Full path to destination root dir
+	LINK="$3$1"
+
+	# Add sudo command if the folder is owned by root
+	CONTAINING_DIR=$(dirname "$LINK")
+	prefix=""
+	if [ "$(stat -c '%U' "$CONTAINING_DIR")" == "root" ]; then
+		prefix="sudo"
+	fi
+
+	$prefix mkdir -p "$CONTAINING_DIR"
+	$prefix rm -f "$LINK"
+	$prefix ln -sf "$2$1" "$LINK"
+}
+
+process_config_dir()
+{
+	# This function takes in a directory and looks for both the root and home
+	# folders which are then used to link configs
+	# $1 = Full path to directory containing 'root' and 'home' configs
+
+	if [ -d "$1/home" ]; then
+		setup_configs "$1/home" "$HOME"
+	fi
+	if [ -d "$1/root" ]; then
+		setup_configs "$1/root" ""
+	fi
+}
+
+setup_configs()
+{
+	# Loop over config folder and link config files
+	# $1 = Full path to directory containing config files
+	# $2 = Full path to destination root dir
+	if [ ! -d "$1" ]; then
+		echo "Warning: The following config directory was not found, skipping this directory."
+		echo "	$1"
+		return 0
+	fi
+	echo "Linking configs found in $1 to $2"
+
+	configs=()
+
+	cd "$1"
+	while IFS=  read -r -d $'\0'; do
+		# Remove the leading .
+		string=${REPLY#*.}
+		configs+=("$string")
+	done < <(find . -type f -print0)
+
+	for config in "${configs[@]}"; do
+		link_config "$config" "$1" "$2"
+	done
 }
 
 main
