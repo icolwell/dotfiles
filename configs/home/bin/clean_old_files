@@ -1,0 +1,29 @@
+#!/bin/bash
+set -e
+
+TIME_LIMIT="30"
+
+# Input flags:
+# -l = list the files that are designated for removal
+# -r = actually remove files rather than just print out stuff
+
+# TODO: Process input flags
+
+mkdir -p "$HOME/.clean_old_files"
+OLD_FILES=$(find "$HOME/Downloads" -mtime +"$TIME_LIMIT")
+
+if [ -z "$OLD_FILES" ]; then
+    exit
+fi
+
+NUM_OLD_FILES=$(echo "$OLD_FILES" | wc -l)
+echo "$NUM_OLD_FILES files were found that are older than $TIME_LIMIT days."
+echo "These files will be removed the next time you login unless they are moved."
+echo "Files to be removed:"
+echo
+echo "$OLD_FILES" | head
+
+if [ "$NUM_OLD_FILES" -gt 10 ]; then
+    echo "..."
+    echo "Run 'clean_old_files -l' to see the complete list of files"
+fi
