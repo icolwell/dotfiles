@@ -1,29 +1,94 @@
 #!/bin/bash
 set -e
+# set -x
 
 TIME_LIMIT="30"
+LIST_PATH="$HOME/.clean_old_files/file_list"
 
 # Input flags:
-# -l = list the files that are designated for removal
+# -l = list all the files that are designated for removal
 # -r = actually remove files rather than just print out stuff
+# No flags will simply update the file list and provide a summary
 
-# TODO: Process input flags
+main()
+{
+    mkdir -p "$HOME/.clean_old_files"
+    if [ -e "$LIST_PATH" ]; then
+        CACHE_FILES=$(<$LIST_PATH)
+    fi
 
-mkdir -p "$HOME/.clean_old_files"
-OLD_FILES=$(find "$HOME/Downloads" -mtime +"$TIME_LIMIT")
+    case "$1" in
+        "-l")
+        display_cache
+        exit
+        ;;
+        "-r")
+        remove_cache_files "$CACHE_FILES"
+        summary
+        exit
+        ;;
+        *)
+        summary
+        exit
+        ;;
+    esac
+}
 
-if [ -z "$OLD_FILES" ]; then
-    exit
-fi
+display_cache()
+{
+    if [ -z "$CACHE_FILES" ]; then
+        echo "No files designated to be removed"
+    else
+        echo "$CACHE_FILES"
+    fi
+}
 
-NUM_OLD_FILES=$(echo "$OLD_FILES" | wc -l)
-echo "$NUM_OLD_FILES files were found that are older than $TIME_LIMIT days."
-echo "These files will be removed the next time you login unless they are moved."
-echo "Files to be removed:"
-echo
-echo "$OLD_FILES" | head
+summary()
+{
+    OLD_FILES=$(find "$HOME/Downloads" -mtime +"$TIME_LIMIT")
+    NUM_OLD_FILES=$(echo "$OLD_FILES" | wc -l)
 
-if [ "$NUM_OLD_FILES" -gt 10 ]; then
-    echo "..."
-    echo "Run 'clean_old_files -l' to see the complete list of files"
-fi
+    if [ -z "$OLD_FILES" ]; then
+        echo "No old files were found"
+        return
+    fi
+
+    echo "$NUM_OLD_FILES files were found that are older than $TIME_LIMIT days."
+    echo "These files will be removed the next time you login unless they are moved."
+    echo "Files to be removed:"
+    echo
+
+    echo "$OLD_FILES" | head -n 10
+    if [ "$NUM_OLD_FILES" -gt 10 ]; then
+        echo "..."
+        echo "Run 'clean_old_files -l' to see the complete list of files"
+    fi
+
+    # Save list of files to cache
+    echo "$OLD_FILES" > "$LIST_PATH"
+}
+
+remove_file_folder()
+{
+    if [ -d "$1" ]; then
+        rm -rf "$1"
+    elif [ -e "$1" ]; then
+        rm "$1"
+    fi
+}
+
+remove_cache_files()
+{
+    if [ -z "$1" ]; then
+        return
+    fi
+
+    NUM_CACHE_FILES=$(echo "$1" | wc -l)
+    echo "Removing $NUM_CACHE_FILES old files ..."
+
+    while read -r file; do
+        remove_file_folder "$file"
+    done <<< "$CACHE_FILES"
+}
+
+main "$@"
