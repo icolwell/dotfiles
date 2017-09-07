@@ -13,6 +13,8 @@ CORE_APPS=(
 	clang-format
 	ctags
 	expect
+	git
+	git-lfs
 	gparted
 	htop
 	jstest-gtk
@@ -127,6 +129,9 @@ repository_additions()
 	# Syncthing
 	curl -s https://syncthing.net/release-key.txt | sudo apt-key add -
 	echo "deb https://apt.syncthing.net/ syncthing stable" | sudo tee /etc/apt/sources.list.d/syncthing.list
+
+	# git-lfs
+	curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
 
 	echo "Updating package lists ..."
 	sudo apt-get update -qq
