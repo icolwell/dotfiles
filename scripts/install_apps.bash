@@ -18,6 +18,7 @@ CORE_APPS=(
 	gparted
 	htop
 	jstest-gtk
+	nmap
 	screen
 	ssh
 	tmux
