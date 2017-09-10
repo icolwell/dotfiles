@@ -147,6 +147,7 @@ default_install()
 	# Other more complicated installations
 	install_chrome
 	install_ros
+	install_go
 }
 
 #------------------------------------------------------------------------------#
@@ -159,6 +160,20 @@ install_chrome()
 		cd "$TEMP_DIR"
 		wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 		sudo dpkg -i --force-depends google-chrome-stable_current_amd64.deb
+	fi
+}
+
+install_go()
+{
+	VERSION="1.8.3"
+
+	if [ -d /usr/local/go ]; then
+		echo "GO is already installed"
+	else
+		TEMP_DIR=$(mktemp -d)
+		cd "$TEMP_DIR"
+		wget https://storage.googleapis.com/golang/go$VERSION.linux-amd64.tar.gz
+		sudo tar -C /usr/local -xzf go$VERSION.linux-amd64.tar.gz
 	fi
 }
 
@@ -212,7 +227,7 @@ install_atom_packages()
 not_installed() {
 	res=$(dpkg-query -W -f='${Status}' "$1" 2>&1)
 	if [[ "$res" == "install ok installed"* ]]; then
-		echo "$1 is already installed."
+		echo "$1 is already installed"
 		return 1
 	fi
 	return 0

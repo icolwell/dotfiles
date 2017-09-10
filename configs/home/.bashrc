@@ -175,6 +175,7 @@ application_specific()
 
 	# GO
 	export GOPATH=$HOME/gocode
+	PATH=$PATH:/usr/local/go/bin
 
 	# cabal
 	PATH="$PATH:$HOME/.cabal/bin"
