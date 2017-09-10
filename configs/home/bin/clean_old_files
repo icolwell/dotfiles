@@ -54,13 +54,14 @@ summary()
     fi
 
     echo "$NUM_OLD_FILES files were found that are older than $TIME_LIMIT days."
-    echo "These files will be removed the next time you login unless they are moved."
+    echo "These files will be deleted the next time you login unless they are moved."
     echo "Files to be removed:"
     echo
 
     echo "$OLD_FILES" | head -n 10
     if [ "$NUM_OLD_FILES" -gt 10 ]; then
-        echo "..."
+        REMAINING=`echo "$NUM_OLD_FILES - 10" | bc`
+        echo "... + $REMAINING additional files"
         echo "Run 'clean_old_files -l' to see the complete list of files"
     fi
 
@@ -89,6 +90,8 @@ remove_cache_files()
     while read -r file; do
         remove_file_folder "$file"
     done <<< "$CACHE_FILES"
+
+    rm -f "$LIST_PATH"
 }
 
 main "$@"
