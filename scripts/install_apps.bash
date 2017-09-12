@@ -33,6 +33,7 @@ MAIN_APPS=(
 	android-tools-adb
 	default-jdk
 	default-jre
+	docker-ce
 	filezilla
 	gpsprune
 	inkscape
@@ -118,6 +119,7 @@ repository_additions()
 	sudo add-apt-repository -y ppa:webupd8team/atom
 	sudo add-apt-repository -y ppa:thomas-schiex/blender
 	sudo add-apt-repository -y ppa:minecraft-installer-peeps/minecraft-installer
+	sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 
 	# Spotify
 	sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886
@@ -133,6 +135,9 @@ repository_additions()
 
 	# git-lfs
 	curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
+
+	# Docker
+	curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 
 	echo "Updating package lists ..."
 	sudo apt-get update -qq
