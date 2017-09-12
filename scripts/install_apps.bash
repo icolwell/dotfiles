@@ -88,7 +88,7 @@ ATOM_PACKAGES=(
 
 main()
 {
-	# repository_additions
+	repository_additions
 	clear
 	case "$1" in
 		-e)
