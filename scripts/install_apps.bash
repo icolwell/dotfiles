@@ -34,7 +34,6 @@ MAIN_APPS=(
 	default-jdk
 	default-jre
 	docker-ce
-	filezilla
 	gpsprune
 	inkscape
 	josm
