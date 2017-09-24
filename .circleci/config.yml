@@ -3,9 +3,9 @@ jobs:
    build:
      docker:
        - image: ubuntu:xenial
-     working_directory: ~/
      steps:
        - checkout
        - run: pwd
        - run: ls
+       - run: echo "$HOME"
        - run: bash scripts/initialize_system.bash
