@@ -7,5 +7,6 @@ jobs:
        - checkout
        - run: pwd
        - run: ls
+       - run: echo "$USER"
        - run: echo "$HOME"
        - run: bash scripts/initialize_system.bash
