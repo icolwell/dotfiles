@@ -7,4 +7,5 @@ jobs:
      steps:
        - checkout
        - run: pwd
+       - run: ls
        - run: bash scripts/initialize_system.bash
