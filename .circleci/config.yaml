@@ -1,0 +1,10 @@
+version: 2
+jobs:
+   build:
+     docker:
+       - image: ubuntu:xenial
+     working_directory: ~/
+     steps:
+       - checkout
+       - run: pwd
+       - run: bash scripts/initialize_system.bash
