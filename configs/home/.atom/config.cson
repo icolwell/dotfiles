@@ -33,6 +33,8 @@
     displayMinimapOnLeft: true
   "remote-edit":
     storePasswordsUsingKeytar: true
+  "tree-view":
+    hideVcsIgnoredFiles: true
   welcome:
     showOnStartup: false
 ".bat.cmake.source.template":

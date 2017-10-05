@@ -161,14 +161,12 @@ define_aliases()
 application_specific()
 {
 	# ROS
-	source_file /opt/ros/indigo/setup.bash
 	source_file /opt/ros/kinetic/setup.bash
 	source_file ~/catkin_ws/devel/setup.bash
-	export QNXROS_WS="$HOME/qnx_catkin_ws"
-	source_file ~/git/renesas-demo/scripts/qnx/qnxros.bash
+	source_file ~/qnxros/scripts/qnxros.bash
 
 	# anm_sim
-	source_file ~/git/anm_sim/vrep_test_suite/scripts/test_suite_lib.bash
+	source_file ~/autonomoose/anm_sim/vrep_test_suite/scripts/test_suite_lib.bash
 
 	# V-REP
 	export VREP_ROOT=$HOME/opt/vrep/V-REP_PRO_EDU_V3_4_0_Linux

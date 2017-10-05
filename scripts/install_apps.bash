@@ -24,6 +24,7 @@ CORE_APPS=(
 	tmux
 	tree
 	traceroute
+	unzip
 	vim
 	xclip
 )
@@ -34,6 +35,8 @@ MAIN_APPS=(
 	default-jdk
 	default-jre
 	docker-ce
+	filezilla
+	gimp
 	gpsprune
 	inkscape
 	josm
