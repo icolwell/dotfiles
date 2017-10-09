@@ -129,7 +129,7 @@ define_aliases()
 	# apt-get aliases
 	alias update='sudo apt-get update'
 	alias install='sudo apt-get install'
-	alias upgrade='sudo apt-get upgrade'
+	alias upgrade='update && sudo apt-get upgrade'
 
 	# git aliases
 	alias gits='git status'
