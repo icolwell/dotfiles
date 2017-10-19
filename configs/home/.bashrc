@@ -147,7 +147,7 @@ define_aliases()
 	alias tmux='tmux -2'
 
 	# ROS
-	alias cws='cd ~/catkin_ws'
+	alias cws='cd ~/catkin_ws/src'
 	alias catb='(cd ~/catkin_ws && catkin build)'
 	alias catc='(cd ~/catkin_ws && catkin clean -y)'
 
@@ -163,7 +163,8 @@ application_specific()
 	# ROS
 	source_file /opt/ros/kinetic/setup.bash
 	source_file ~/catkin_ws/devel/setup.bash
-	source_file ~/qnxros/scripts/qnxros.bash
+	export QNXROS_WS="$HOME/qnx_catkin_ws"
+	source_file ~/autonomoose/renesas-demo/scripts/qnx/qnxros.bash
 
 	# anm_sim
 	source_file ~/autonomoose/anm_sim/vrep_test_suite/scripts/test_suite_lib.bash

@@ -15,8 +15,11 @@
       "clang-format"
       "autocomplete-clang"
       "linter-clang"
+      "language-gfm"
     ]
+    excludeVcsIgnoredPaths: false
     telemetryConsent: "no"
+    warnOnLargeFileLimit: 10
   editor:
     showInvisibles: true
     tabLength: 4
@@ -33,6 +36,8 @@
     displayMinimapOnLeft: true
   "remote-edit":
     storePasswordsUsingKeytar: true
+  "spell-check":
+    useLocales: false
   "tree-view":
     hideVcsIgnoredFiles: true
   welcome:
