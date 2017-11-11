@@ -90,6 +90,9 @@ main()
 {
 	repository_additions
 	clear
+
+	sudo debconf-set-selections -v "$SCRIPT_DIR/debconf_selections.txt"
+
 	case "$1" in
 		-e)
 			echo "Installing entertainment apps only ..."
@@ -163,7 +166,7 @@ install_chrome()
 		TEMP_DIR=$(mktemp -d)
 		cd "$TEMP_DIR"
 		wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-		sudo dpkg -i --force-depends google-chrome-stable_current_amd64.deb
+		sudo apt -y install ./google-chrome-stable_current_amd64.deb
 	fi
 }
 
