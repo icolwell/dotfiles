@@ -6,5 +6,3 @@ jobs:
      steps:
        - checkout
        - run: bash scripts/install_apps.bash
-       - run: dbus-launch
-       - run: bash scripts/configure_desktop.bash
