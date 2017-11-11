@@ -5,8 +5,6 @@ jobs:
        - image: iancolwell/xenial_user:latest
      steps:
        - checkout
-       - run: pwd
-       - run: ls
-       - run: echo "$USER"
-       - run: echo "$HOME"
-       - run: bash scripts/initialize_system.bash
+       - run: bash scripts/install_apps.bash
+       - run: dbus-launch
+       - run: bash scripts/configure_desktop.bash
