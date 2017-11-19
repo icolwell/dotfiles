@@ -17,6 +17,9 @@ main()
 	configure_thunderbird
 	configure_gsettings
 	configure_systemd
+
+	echo ""
+	echo "Configuration complete."
 }
 
 remove_stuff()
@@ -98,12 +101,15 @@ configure_gsettings()
 
 configure_systemd()
 {
+	echo "Enabling systemd services ..."
 	# Systemd does not allow symlinks which is quite frustrating
 	# We must place actual service files, not symlinks
 	mkdir -p ~/.config/systemd/user
-	wget -P ~/.config/systemd/user/ https://raw.githubusercontent.com/syncthing/syncthing/master/etc/linux-systemd/user/syncthing.service
+	wget -qP ~/.config/systemd/user/ https://raw.githubusercontent.com/syncthing/syncthing/master/etc/linux-systemd/user/syncthing.service
 	systemctl --user enable syncthing.service
 	systemctl --user start syncthing.service
+
+	echo "systemd services enabled."
 }
 
 #------------------------------------------------------------------------------#
