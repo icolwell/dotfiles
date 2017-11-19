@@ -2,6 +2,7 @@
 set -e
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+REPO_DIR="$(dirname "$SCRIPT_DIR")"
 
 #------------------------------------------------------------------------------#
 # App lists
@@ -91,7 +92,7 @@ main()
 	repository_additions
 	clear
 
-	sudo debconf-set-selections -v "$SCRIPT_DIR/debconf_selections.txt"
+	sudo debconf-set-selections -v "$REPO_DIR/configs/debconf_selections.txt"
 
 	case "$1" in
 		-e)
