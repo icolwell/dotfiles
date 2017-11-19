@@ -1,0 +1,8 @@
+version: 2
+jobs:
+   build:
+     docker:
+       - image: iancolwell/xenial_user:latest
+     steps:
+       - checkout
+       - run: bash scripts/install_apps.bash

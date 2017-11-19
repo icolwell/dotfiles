@@ -2,8 +2,13 @@
 
 This repo contains scripts to automatically install applications and configure
 both the desktop and terminal environment. The two main goals of this repo are:
-1. To be able to install a fresh copy of Ubuntu and then simply run a single script to set everything up "the way it was before".
+1. To be able to install a fresh copy of Ubuntu and then simply run a single
+script to set everything up "the way it was before".
 2. To backup configurations and sync them across multiple systems.
+
+Additional Features
+- debconf preconfiguration to avoid any prompts during installation.
+- easy support for host-specific configs
 
 NOTE: These dotfiles and scripts have only been tested on Ubuntu 16.04. It is
 possible that they no longer work for 14.04 or other versions.
@@ -11,10 +16,10 @@ possible that they no longer work for 14.04 or other versions.
 ## Folder Structure
 
 I designed the folder structure to be as simple as possible. Since all user
-configs reside somewhere under your `$HOME` directory, the `configs/home` folder in
-this repo contains all configs relative to the `$HOME` directory. This means a
-script can simply loop over all the files found in the `configs/home` folder and know
-where to symlink them relative to your `$HOME` directory.
+configs reside somewhere under your `$HOME` directory, the `configs/home` folder
+in this repo contains all configs relative to the `$HOME` directory. This means
+a script can simply loop over all the files found in the `configs/home` folder
+and know where to symlink them relative to your `$HOME` directory.
 
 Another benefit is
 that you can easily separate private configs (such as your `.ssh/config`) by
@@ -26,27 +31,7 @@ System wide configs are handled the same way. These are stored in the
 
 ## Scripts
 
-**configure_desktop.bash**  
-Symlinks any configs found in the `configs` folder or any other private folders
-you specify. Configuration of Thunderbird, unity and vim is also performed
-(Credit for any Vim configs/setup in this repo goes to [chutsu](https://github.com/chutsu/dotfiles)).
-
-**install_apps.bash**  
-Automatically installs ubuntu packages and atom plugins as well as some more
-complicated custom installs (ROS, chrome).
-
-Use the `-c` flag to indicate only a core installation (core installation
-performs a smaller install if time is limited).
-
-Use the `-e` flag to install "entertainment" apps. Basically just a category of
-apps that I don't want installed by default on work machines.
-
-Use the `-a` flag to install apps from all categories.
-
-**initialize_system.bash**  
-Simply calls the above two scripts. It is meant to be used right after
-installing Ubuntu or to update the existing system if any dotfiles or apps
-change.
+See the [scripts README](scripts/README.md) for an explanation of the scripts.
 
 ## Using my dotfiles repo
 
@@ -63,3 +48,12 @@ totally optional of course:
     - All the `APPS` variables at the very top
     - The `repository_additions` function
     - The `default_install` function to add or remove custom installs
+
+## Continuous Integration Testing
+
+A [docker image](https://hub.docker.com/r/iancolwell/xenial_user/)
+that emulates a typical Ubuntu 16.04 desktop installation is used to
+verify that all the installation scripts work as expected.
+
+The CI build logs can be found
+[here](https://circleci.com/gh/icolwell/dotfiles).
