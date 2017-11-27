@@ -15,7 +15,7 @@
       "clang-format"
       "autocomplete-clang"
       "linter-clang"
-      "language-gfm"
+      "nuclide"
     ]
     excludeVcsIgnoredPaths: false
     telemetryConsent: "no"
@@ -38,8 +38,7 @@
     storePasswordsUsingKeytar: true
   "spell-check":
     useLocales: false
-  "tree-view":
-    hideVcsIgnoredFiles: true
+  "tree-view": {}
   welcome:
     showOnStartup: false
 ".bat.cmake.source.template":
