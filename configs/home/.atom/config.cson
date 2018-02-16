@@ -30,8 +30,7 @@
     executablePath: "/usr/bin/clang++-3.5"
   "linter-shellcheck":
     shellcheckExecutablePath: "/home/ian/.cabal/bin/shellcheck"
-  "linter-ui-default":
-    showPanel: true
+  "linter-ui-default": {}
   minimap:
     displayMinimapOnLeft: true
   "remote-edit":

@@ -43,6 +43,7 @@ MAIN_APPS=(
 	josm
 	lm-sensors
 	mercurial
+	npm
 	octave
 	openvpn
 	opera-stable
