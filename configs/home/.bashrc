@@ -170,7 +170,7 @@ application_specific()
 	source_file ~/autonomoose/anm_sim/vrep_test_suite/scripts/test_suite_lib.bash
 
 	# V-REP
-	export VREP_ROOT=$HOME/opt/vrep/V-REP_PRO_EDU_V3_4_0_Linux
+	export VREP_ROOT=$HOME/opt/vrep/V-REP_PRO_EDU_V3_5_0_Linux
 
 	# GO
 	export GOPATH=$HOME/gocode
