@@ -41,12 +41,14 @@ MAIN_APPS=(
 	gpsprune
 	inkscape
 	josm
+	keepassx
 	lm-sensors
 	mercurial
 	npm
 	octave
 	openvpn
 	opera-stable
+	pandoc
 	pavucontrol
 	pinta
 	python-pip

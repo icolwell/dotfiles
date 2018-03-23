@@ -5,6 +5,17 @@
     formatCOnSave: false
     formatCPlusPlusOnSave: false
   core:
+    customFileTypes:
+      "source.ini": [
+        ".buckconfig"
+        ".hgrc"
+      ]
+      "source.json": [
+        "BUCK.autodeps"
+      ]
+      "source.python": [
+        "BUCK"
+      ]
     disabledPackages: [
       "autocomplete-snippets"
       "linter-cpplint"
@@ -16,6 +27,7 @@
       "autocomplete-clang"
       "linter-clang"
       "language-markdown"
+      "nuclide"
     ]
     excludeVcsIgnoredPaths: false
     telemetryConsent: "no"

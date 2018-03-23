@@ -1,0 +1,8 @@
+#!/bin/bash
+set -e
+
+if [ "$1" == "waterloo" ]; then
+    sudo openconnect -u icolwell cn-vpn.uwaterloo.ca
+elif [ "$1" == "overshed" ]; then
+    sudo openvpn --config "$HOME/$HOSTNAME.ovpn"
+fi
