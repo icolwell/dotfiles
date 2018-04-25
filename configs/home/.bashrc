@@ -148,7 +148,7 @@ define_aliases()
 
 	# ROS
 	alias cws='cd ~/catkin_ws/src'
-	alias catb='(cd ~/catkin_ws && catkin build)'
+	alias catb='(cd ~/catkin_ws && catkin build --continue-on-failure)'
 	alias catc='(cd ~/catkin_ws && catkin clean -y)'
 
 	# Other
