@@ -185,6 +185,9 @@ application_specific()
 	# Other
 	[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
+	# npm, yarn
+	export BROWSER=none
+
 	export PATH
 }
 
