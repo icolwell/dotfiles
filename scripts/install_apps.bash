@@ -52,6 +52,7 @@ MAIN_APPS=(
 	pavucontrol
 	pinta
 	python-pip
+	spotify-client
 	syncthing
 	texlive
 	texlive-latex-extra
@@ -66,7 +67,6 @@ MAIN_APPS=(
 ENTERTAINMENT_APPS=(
 	minecraft-installer
 	nautilus-dropbox
-	spotify-client
 	steam
 )
 
@@ -131,7 +131,7 @@ repository_additions()
 	sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 
 	# Spotify
-	sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886
+	sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0DF731E45CE24F27EEEB1450EFDC8610341D9410
 	echo 'deb http://repository.spotify.com stable non-free' | sudo tee /etc/apt/sources.list.d/spotify.list
 
 	# Opera
