@@ -28,6 +28,7 @@
       "linter-clang"
       "language-markdown"
       "nuclide"
+      "remote-edit"
     ]
     excludeVcsIgnoredPaths: false
     telemetryConsent: "no"
