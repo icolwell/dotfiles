@@ -204,10 +204,18 @@ Visualization Manager:
       Value: true
     - Class: rviz/MarkerArray
       Enabled: true
-      Marker Topic: /v2x_rviz
-      Name: V2X
+      Marker Topic: /anm_visualizer/v2x_converter/cars_and_traffic_lights
+      Name: V2X Cars
       Namespaces:
-        {}
+        /anm_visualizer: true
+      Queue Size: 100
+      Value: true
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Marker Topic: /anm_visualizer/v2x_stop_sign/stop_signs
+      Name: V2X Stop Signs
+      Namespaces:
+        /anm_visualizer: true
       Queue Size: 100
       Value: true
     - Class: rviz/MarkerArray
@@ -251,7 +259,7 @@ Visualization Manager:
       Marker Topic: /v2x_stop_sign_list_viz
       Name: Stop Signs
       Namespaces:
-        /v2x_stop_sign_publisher_viz: true
+        {}
       Queue Size: 100
       Value: true
     - Alpha: 0.699999988
@@ -268,6 +276,14 @@ Visualization Manager:
       Enabled: true
       Marker Topic: /visualization_marker_array
       Name: Map Server Viz
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Marker Topic: /tracked_vis
+      Name: Tracker Viz
       Namespaces:
         {}
       Queue Size: 100
@@ -297,25 +313,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 63.5121994
+      Distance: 20.9373951
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 16.7814102
-        Y: -2.63737297
-        Z: -1.5802573
+        X: 12.537961
+        Y: 0.341567904
+        Z: 6.44021225
       Focal Shape Fixed Size: false
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.549797297
+      Pitch: 0.449797362
       Target Frame: base_link
       Value: Orbit (rviz)
-      Yaw: 0.120369188
+      Yaw: 0.115369141
     Saved: ~
 Window Geometry:
   Displays:
