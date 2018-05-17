@@ -37,6 +37,8 @@ config_container_folder/
             apt_packages.txt
             atom_packages.txt
             debconf_selections.txt
+            install.bash
+            configure.bash
 ```
 
 ## Process

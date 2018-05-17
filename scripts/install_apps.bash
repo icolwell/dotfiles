@@ -12,12 +12,6 @@ CONFIG_DIRS=(
 	"$HOME/sync/dotfiles/configs"
 )
 
-# PUBLIC_CONFIGS_DIR="$REPO_DIR/configs"
-# PRIVATE_CONFIGS_DIR="$HOME/sync/dotfiles/configs"
-
-#------------------------------------------------------------------------------#
-# Main entry point of script
-
 main()
 {
 	sudo -v
@@ -34,6 +28,7 @@ main()
 	repository_additions
 	clear
 
+	# CUSTOM_INSTALLS=()
 	for CONFIG_DIR in "${CONFIG_DIRS[@]}"; do
 		echo "Loading configs from $CONFIG_DIR ..."
 		# Always install common apps
@@ -57,9 +52,18 @@ main()
 	echo "${ATOM_PACKAGES[@]}"
 	echo ""
 
+	echo "Custom install scripts found:"
+	echo "${CUSTOM_INSTALLS[@]}"
+	echo ""
+
 	echo "Installing ..."
 	sudo apt-get -y install "${APPS[@]}"
 	install_atom_packages "${ATOM_PACKAGES[@]}"
+
+	echo "Running custom install scripts ..."
+	for CUSTOM_INSTALL in "${CUSTOM_INSTALLS[@]}"; do
+		bash "$CUSTOM_INSTALL"
+	done
 
 	echo ""
 	echo "Installation Complete!"
@@ -104,6 +108,7 @@ load_dotfile_configs()
 	APT_PKG_FILE="$1/dotfile_config/apt_packages.txt"
 	ATOM_PKG_FILE="$1/dotfile_config/atom_packages.txt"
 	DEBCONF_FILE="$1/dotfile_config/debconf_selections.txt"
+	CUSTOM_INSTALL_FILE="$1/dotfile_config/install.bash"
 
 	if [ -f "$APT_PKG_FILE" ]; then
 		mapfile -t -O "${#APPS[@]}" APPS < "$APT_PKG_FILE"
@@ -116,10 +121,11 @@ load_dotfile_configs()
 	if [ -f "$DEBCONF_FILE" ]; then
 		sudo debconf-set-selections -v "$DEBCONF_FILE"
 	fi
-}
 
-#------------------------------------------------------------------------------#
-# Custom Installs
+	if [ -f "$CUSTOM_INSTALL_FILE" ]; then
+		CUSTOM_INSTALLS+=("$CUSTOM_INSTALL_FILE")
+	fi
+}
 
 install_chrome()
 {
@@ -144,41 +150,6 @@ install_go()
 		sudo tar -C /usr/local -xzf go$VERSION.linux-amd64.tar.gz
 	fi
 }
-
-install_ros()
-{
-	UBUNTU_CODENAME=$(lsb_release -s -c)
-	case $UBUNTU_CODENAME in
-		trusty)
-			ROS_DISTRO=indigo;;
-		xenial)
-			ROS_DISTRO=kinetic;;
-		*)
-			echo "Unsupported version of Ubuntu detected. Only trusty (14.04.*) and xenial (16.04.*) are currently supported."
-		exit 1
-	esac
-
-	sudo sh -c "echo \"deb http://packages.ros.org/ros/ubuntu $UBUNTU_CODENAME main\" > /etc/apt/sources.list.d/ros-latest.list"
-	wget -qO - http://packages.ros.org/ros.key | sudo apt-key add -
-
-	echo "Updating package lists ..."
-	sudo apt-get -qq update
-
-	echo "Installing ROS $ROS_DISTRO ..."
-	sudo apt-get -qq install ros-$ROS_DISTRO-desktop python-rosinstall > /dev/null
-
-	source /opt/ros/$ROS_DISTRO/setup.bash
-
-	# Prepare rosdep to install dependencies.
-	echo "Updating rosdep ..."
-	if [ ! -d /etc/ros/rosdep ]; then
-		sudo rosdep init > /dev/null
-	fi
-	rosdep update > /dev/null
-}
-
-#------------------------------------------------------------------------------#
-# Utility functions
 
 install_atom_packages()
 {
