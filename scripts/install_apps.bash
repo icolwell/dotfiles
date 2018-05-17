@@ -28,8 +28,8 @@ main()
 		confirm_classes
 	fi
 
-	# repository_additions
-	# clear
+	repository_additions
+	clear
 
 	for CONFIG_DIR in "${CONFIG_DIRS[@]}"; do
 		echo "Loading configs from $CONFIG_DIR ..."
