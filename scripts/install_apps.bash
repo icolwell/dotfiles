@@ -89,6 +89,10 @@ repository_additions()
 	wget -O - http://deb.opera.com/archive.key | sudo apt-key add -
 	echo 'deb https://deb.opera.com/opera-stable/ stable non-free' | sudo tee /etc/apt/sources.list.d/opera-stable.list
 
+	# Chrome
+	wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+	echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' | sudo tee /etc/apt/sources.list.d/google-chrome.list
+
 	# Syncthing
 	curl -s https://syncthing.net/release-key.txt | sudo apt-key add -
 	echo "deb https://apt.syncthing.net/ syncthing stable" | sudo tee /etc/apt/sources.list.d/syncthing.list
@@ -124,30 +128,6 @@ load_dotfile_configs()
 
 	if [ -f "$CUSTOM_INSTALL_FILE" ]; then
 		CUSTOM_INSTALLS+=("$CUSTOM_INSTALL_FILE")
-	fi
-}
-
-install_chrome()
-{
-	if not_installed 'google-chrome-stable'; then
-		TEMP_DIR=$(mktemp -d)
-		cd "$TEMP_DIR"
-		wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-		sudo apt -y install ./google-chrome-stable_current_amd64.deb
-	fi
-}
-
-install_go()
-{
-	VERSION="1.8.3"
-
-	if [ -d /usr/local/go ]; then
-		echo "GO is already installed"
-	else
-		TEMP_DIR=$(mktemp -d)
-		cd "$TEMP_DIR"
-		wget https://storage.googleapis.com/golang/go$VERSION.linux-amd64.tar.gz
-		sudo tar -C /usr/local -xzf go$VERSION.linux-amd64.tar.gz
 	fi
 }
 

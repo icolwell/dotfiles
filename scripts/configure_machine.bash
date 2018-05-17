@@ -226,4 +226,4 @@ backup_config()
 	fi
 }
 
-main
+main "$@"

@@ -5,6 +5,7 @@ default-jre
 docker-ce
 filezilla
 gimp
+google-chrome-stable
 gpsprune
 inkscape
 josm
