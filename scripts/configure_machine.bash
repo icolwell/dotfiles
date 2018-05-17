@@ -4,22 +4,41 @@ set -e
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 REPO_DIR="$(dirname "$SCRIPT_DIR")"
 
+source "$SCRIPT_DIR/utils.bash"
+
 # Paths to config locations
 PUBLIC_CONFIGS_DIR="$REPO_DIR/configs"
 PRIVATE_CONFIGS_DIR="$HOME/sync/dotfiles/common_configs"
 SYSTEM_CONFIGS_DIR="$HOME/sync/dotfiles/sys_specific_configs/$HOSTNAME"
 
+# Config locations
+CONFIG_DIRS=(
+	"$REPO_DIR/configs"
+	"$HOME/sync/dotfiles/configs"
+)
+
+
 main()
 {
+	if [ "$1" == '-c' ]; then
+		echo "Applying common configs only ..."
+	else
+		for CONFIG_DIR in "${CONFIG_DIRS[@]}"; do
+			get_classes "$CONFIG_DIR"
+		done
+
+		confirm_classes
+	fi
+
 	remove_stuff
 	link_stuff
 	setup_vim
-	configure_thunderbird
-	configure_gsettings
-	configure_systemd
+	# configure_thunderbird
+	# configure_gsettings
+	# configure_systemd
 
 	echo ""
-	echo "Configuration complete."
+	echo "Configuration complete!"
 }
 
 remove_stuff()
@@ -33,9 +52,12 @@ remove_stuff()
 
 link_stuff()
 {
-	process_config_dir "$PUBLIC_CONFIGS_DIR"
-	process_config_dir "$PRIVATE_CONFIGS_DIR"
-	process_config_dir "$SYSTEM_CONFIGS_DIR"
+	for CONFIG_DIR in "${CONFIG_DIRS[@]}"; do
+		process_config_container "$CONFIG_DIR"
+	done
+	# process_config_dir "$PUBLIC_CONFIGS_DIR"
+	# process_config_dir "$PRIVATE_CONFIGS_DIR"
+	# process_config_dir "$SYSTEM_CONFIGS_DIR"
 
 	echo "Symlinks created successfully."
 	echo ""
@@ -115,31 +137,26 @@ configure_systemd()
 #------------------------------------------------------------------------------#
 # Anything below this line should not require editing based on user preference
 
-link_config()
+process_config_container()
 {
-	# $1 = Relative path to file from config root dir
-	# $2 = Full path to config root dir
-	# $3 = Full path to destination root dir
-	LINK="$3$1"
+	# This function takes in a config container directory and processes any
+	# config categories in the container
+	# $1 = Full path to config container directory
 
-	# Add sudo command if the folder is owned by root
-	CONTAINING_DIR=$(dirname "$LINK")
-	prefix=""
-	if [ "$(stat -c '%U' "$CONTAINING_DIR")" == "root" ]; then
-		prefix="sudo"
-	fi
+	# Always link common configs
+	process_config_category "$1/common_configs"
 
-	$prefix mkdir -p "$CONTAINING_DIR"
-	$prefix rm -f "$LINK"
-	$prefix ln -sf "$2$1" "$LINK"
+	# Config based on class
+	for CLASS in "${CLASSES[@]}"; do
+		process_config_category "$1/class_configs/$CLASS"
+	done
+
+	# System-specific config
+	process_config_category	"$1/sys_specific_configs/$HOSTNAME"
 }
 
-process_config_dir()
+process_config_category()
 {
-	# This function takes in a directory and looks for both the root and home
-	# folders which are then used to link configs
-	# $1 = Full path to directory containing 'root' and 'home' configs
-
 	if [ -d "$1/home" ]; then
 		setup_configs "$1/home" "$HOME"
 	fi
@@ -172,6 +189,40 @@ setup_configs()
 	for config in "${configs[@]}"; do
 		link_config "$config" "$1" "$2"
 	done
+}
+
+link_config()
+{
+	# $1 = Relative path to file from config root dir
+	# $2 = Full path to config root dir
+	# $3 = Full path to destination root dir
+	LINK="$3$1"
+
+	# Add sudo command if the folder is owned by root
+	CONTAINING_DIR=$(dirname "$LINK")
+	prefix=""
+	if [ "$(stat -c '%U' "$CONTAINING_DIR")" == "root" ]; then
+		prefix="sudo"
+	fi
+
+	backup_config "$prefix" "$LINK"
+
+	$prefix mkdir -p "$CONTAINING_DIR"
+	$prefix rm -f "$LINK"
+	$prefix ln -sf "$2$1" "$LINK"
+}
+
+backup_config()
+{
+	# $1 = command prefix (sudo)
+	# $2 = location of the file to backup
+
+	FILE="$2"
+	if [ ! -L "$FILE" ]; then
+		# File is not a symlink, backup
+		echo "Backing up file: $FILE"
+		$1 cp "$FILE" "$FILE.backup"
+	fi
 }
 
 main

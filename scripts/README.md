@@ -27,15 +27,16 @@ change.
 
 ```
 config_container_folder/
-    home/
-        [configs relative to $HOME]
-    root/
-        [configs relative to root]
-    dotfile_config/
-        class.txt
-        apt_packages.txt
-        atom_packages.txt
-        debconf_selections.txt
+    config_category_folder/
+        home/
+            [configs relative to $HOME]
+        root/
+            [configs relative to root]
+        dotfile_config/
+            class.txt
+            apt_packages.txt
+            atom_packages.txt
+            debconf_selections.txt
 ```
 
 ## Process
