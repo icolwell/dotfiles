@@ -4,129 +4,107 @@ set -e
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 REPO_DIR="$(dirname "$SCRIPT_DIR")"
 
-#------------------------------------------------------------------------------#
-# App lists
-
-# The 'core' is a collection of lightweight apps, these are installed when
-# time is too short for a full install
-CORE_APPS=(
-	clang
-	clang-format
-	ctags
-	expect
-	git
-	git-lfs
-	gparted
-	htop
-	jstest-gtk
-	nmap
-	screen
-	ssh
-	tmux
-	tree
-	traceroute
-	unzip
-	vim
-	xclip
+# Config locations
+CONFIG_DIRS=(
+	"$REPO_DIR/configs"
+	"$HOME/sync/dotfiles/configs"
 )
 
-MAIN_APPS=(
-	atom
-	android-tools-adb
-	default-jdk
-	default-jre
-	docker-ce
-	filezilla
-	gimp
-	gpsprune
-	inkscape
-	josm
-	keepassx
-	lm-sensors
-	mercurial
-	npm
-	octave
-	openvpn
-	opera-stable
-	pandoc
-	pavucontrol
-	pinta
-	python-pip
-	spotify-client
-	syncthing
-	texlive
-	texlive-latex-extra
-	texlive-science
-	texstudio
-	virtualbox
-	vlc
-	wireshark
-)
-
-# Apps not usually needed on 'work' machines
-ENTERTAINMENT_APPS=(
-	minecraft-installer
-	nautilus-dropbox
-	steam
-)
-
-# This list is specifically for plugin packages for the Atom text editor
-ATOM_PACKAGES=(
-	atom-beautify
-	autocomplete-clang
-	busy-signal
-	clang-format
-	git-time-machine
-	intentions
-	linter
-	linter-ui-default
-	linter-clang
-	linter-shellcheck
-	linter-cpplint
-	language-lua
-	language-cmake
-	markdown-pdf
-	minimap
-)
+# PUBLIC_CONFIGS_DIR="$REPO_DIR/configs"
+# PRIVATE_CONFIGS_DIR="$HOME/sync/dotfiles/configs"
 
 #------------------------------------------------------------------------------#
 # Main entry point of script
 
 main()
 {
-	repository_additions
-	clear
+	if [ "$1" == '-c' ]; then
+		echo "Installing common apps only ..."
+	else
+		for CONFIG_DIR in "${CONFIG_DIRS[@]}"; do
+			get_classes "$CONFIG_DIR"
+		done
 
-	sudo debconf-set-selections -v "$REPO_DIR/configs/debconf_selections.txt"
+		confirm_classes
+	fi
 
-	case "$1" in
-		-e)
-			echo "Installing entertainment apps only ..."
-			sudo apt-get -y install "${ENTERTAINMENT_APPS[@]}"
-			;;
-		-c)
-			echo "Installing core apps only ..."
-			sudo apt-get -y install "${CORE_APPS[@]}"
-			;;
-		-a)
-			echo "Installing all apps ..."
-			sudo apt-get -y install "${ENTERTAINMENT_APPS[@]}"
-			# Fall through
-			;;&
-		*)
-			echo "Installing core and main apps ..."
-			default_install
-			;;
-	esac
+	# repository_additions
+	# clear
+
+	for CONFIG_DIR in "${CONFIG_DIRS[@]}"; do
+		echo "Loading configs from $CONFIG_DIR ..."
+		# Always install common apps
+		load_dotfile_configs "$CONFIG_DIR/common_configs"
+
+		# Install apps based on class
+		for CLASS in "${CLASSES[@]}"; do
+			load_dotfile_configs "$CONFIG_DIR/class_configs/$CLASS"
+		done
+
+		# Install system-specific apps
+		load_dotfile_configs "$CONFIG_DIR/sys_specific_configs/$HOSTNAME"
+	done
+
+	echo ""
+	echo "Apps to be installed:"
+	echo "${APPS[@]}"
+	echo ""
+
+	echo "Atom packages to be installed:"
+	echo "${ATOM_PACKAGES[@]}"
+	echo ""
+
+	echo "Installing ..."
+	sudo apt-get -y install "${APPS[@]}"
+	install_atom_packages "${ATOM_PACKAGES[@]}"
+
+	echo ""
+	echo "Installation Complete!"
+}
+
+get_classes()
+{
+	# This function looks to see if any system-specific or class settings exist
+	# $1 = Config container directory
+
+	CLASS_FILE="$1/sys_specific_configs/$HOSTNAME/dotfile_config/class.txt"
+
+	if [ -f "$CLASS_FILE" ]; then
+		mapfile -t -O "${#CLASSES[@]}" CLASSES < "$CLASS_FILE"
+	fi
+}
+
+confirm_classes()
+{
+	if [ -z "$CLASSES" ]; then
+		echo "This machine (named $HOSTNAME) was not assigned any configuration class."
+		echo "A default desktop configuration will be used."
+		echo "Do you wish to continue? (y/n):"
+
+		while read ans; do
+			case "$ans" in
+				y) break;;
+				n) exit; break;;
+				*) echo "(y/n):";;
+			esac
+		done
+		CLASSES=("desktop")
+	else
+		echo "The following classes were found for this machine (named $HOSTNAME):"
+		printf '%s\n' "${CLASSES[@]}"
+		echo ""
+	fi
 }
 
 repository_additions()
 {
+	# This list of respositories gets added to all machines, but the apps are
+	# only installed if they appear in the machine's list
+
 	sudo apt-get -qq install curl wget
 	sudo add-apt-repository "deb http://archive.canonical.com/ubuntu $(lsb_release -sc) partner"
 	sudo add-apt-repository multiverse
 	sudo add-apt-repository -y ppa:webupd8team/atom
-	sudo add-apt-repository -y ppa:thomas-schiex/blender
 	sudo add-apt-repository -y ppa:minecraft-installer-peeps/minecraft-installer
 	sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 
@@ -152,16 +130,23 @@ repository_additions()
 	sudo apt-get update -qq
 }
 
-default_install()
+load_dotfile_configs()
 {
-	sudo apt-get -y install "${CORE_APPS[@]}"
-	sudo apt-get -y install "${MAIN_APPS[@]}"
-	install_atom_packages "${ATOM_PACKAGES[@]}"
+	APT_PKG_FILE="$1/dotfile_config/apt_packages.txt"
+	ATOM_PKG_FILE="$1/dotfile_config/atom_packages.txt"
+	DEBCONF_FILE="$1/dotfile_config/debconf_selections.txt"
 
-	# Other more complicated installations
-	install_chrome
-	install_ros
-	install_go
+	if [ -f "$APT_PKG_FILE" ]; then
+		mapfile -t -O "${#APPS[@]}" APPS < "$APT_PKG_FILE"
+	fi
+
+	if [ -f "$ATOM_PKG_FILE" ]; then
+		mapfile -t -O "${#ATOM_PACKAGES[@]}" ATOM_PACKAGES < "$ATOM_PKG_FILE"
+	fi
+
+	if [ -f "$DEBCONF_FILE" ]; then
+		sudo debconf-set-selections -v "$DEBCONF_FILE"
+	fi
 }
 
 #------------------------------------------------------------------------------#

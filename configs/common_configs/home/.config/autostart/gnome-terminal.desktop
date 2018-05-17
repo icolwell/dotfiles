@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=gnome-terminal --maximize -e /usr/local/bin/_login_script.bash
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_CA]=Terminal
+Name=Terminal
+Comment[en_CA]=Login terminal
+Comment=Login terminal
