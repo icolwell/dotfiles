@@ -2,10 +2,6 @@
 # Choices: Antananarivo, Chagos, Christmas, Cocos, Comoro, Kerguelen, Mahe, Maldives, Mauritius, Mayotte, Reunion
 #tzdata  tzdata/Zones/America    select  Toronto
 
-# Do you agree to all terms of the Steam License Agreement?
-# Choices: I DECLINE, I AGREE
-steam steam/question select I AGREE
-
 # Do you want to update Opera together with the rest of the system?
 opera-stable opera-stable/add-deb-source boolean true
 
