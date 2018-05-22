@@ -1,5 +1,7 @@
 atom
 android-tools-adb
+clang
+clang-format
 default-jdk
 default-jre
 docker-ce
@@ -9,6 +11,7 @@ google-chrome-stable
 gpsprune
 inkscape
 josm
+jstest-gtk
 keepassx
 lm-sensors
 mercurial
@@ -29,3 +32,4 @@ texstudio
 virtualbox
 vlc
 wireshark
+xclip

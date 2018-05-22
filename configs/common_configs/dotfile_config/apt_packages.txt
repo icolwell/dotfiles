@@ -1,12 +1,9 @@
-clang
-clang-format
 ctags
 expect
 git
 git-lfs
 gparted
 htop
-jstest-gtk
 nmap
 screen
 ssh
@@ -15,4 +12,3 @@ tree
 traceroute
 unzip
 vim
-xclip
