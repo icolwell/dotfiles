@@ -1,0 +1,3 @@
+kodi
+transmission-daemon
+nfs-kernel-server

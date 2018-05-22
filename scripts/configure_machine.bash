@@ -14,7 +14,7 @@ SYSTEM_CONFIGS_DIR="$HOME/sync/dotfiles/sys_specific_configs/$HOSTNAME"
 # Config locations
 CONFIG_DIRS=(
 	"$REPO_DIR/configs"
-	"$HOME/sync/dotfiles/configs"
+	"$HOME/df_sync/configs"
 )
 
 
@@ -201,6 +201,11 @@ link_config()
 
 	# Add sudo command if the folder is owned by root
 	CONTAINING_DIR=$(dirname "$LINK")
+    if [ ! -d "$CONTAINING_DIR" ]; then
+        echo "Skipping $LINK because containing folder does not exist"
+        return
+    fi
+
 	prefix=""
 	if [ "$(stat -c '%U' "$CONTAINING_DIR")" == "root" ]; then
 		prefix="sudo"
@@ -219,7 +224,7 @@ backup_config()
 	# $2 = location of the file to backup
 
 	FILE="$2"
-	if [ ! -L "$FILE" ]; then
+	if [ ! -L "$FILE" ] && [ -f "$FILE" ]; then
 		# File is not a symlink, backup
 		echo "Backing up file: $FILE"
 		$1 cp "$FILE" "$FILE.backup"

@@ -1,12 +1,12 @@
 ctags
 expect
 git
-git-lfs
 gparted
 htop
 nmap
 screen
 ssh
+syncthing
 tmux
 tree
 traceroute
