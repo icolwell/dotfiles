@@ -1,3 +1,4 @@
+dirmngr
 kodi
-transmission-daemon
 nfs-kernel-server
+transmission-daemon
