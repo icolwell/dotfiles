@@ -15,7 +15,6 @@ jstest-gtk
 keepassx
 lm-sensors
 mercurial
-yarn
 octave
 openvpn
 opera-stable
