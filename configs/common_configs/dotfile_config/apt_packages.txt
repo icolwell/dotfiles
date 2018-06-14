@@ -12,3 +12,4 @@ tree
 traceroute
 unzip
 vim
+p7zip-full
