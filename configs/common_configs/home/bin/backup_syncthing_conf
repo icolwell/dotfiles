@@ -1,0 +1,4 @@
+#!/bin/bash
+set -e
+
+cp ~/.config/syncthing/config.xml ~/df_sync/configs/sys_specific_configs/$HOSTNAME/home/.config/syncthing/
