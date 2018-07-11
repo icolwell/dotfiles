@@ -136,6 +136,7 @@ define_aliases()
 	alias gita='git add -A . && git status'
 	alias gitc='git commit -m'
 	alias gitp='git pull'
+	alias gitsr='git submodule update --recursive'
 
 	# mercurial aliases
 	alias hgs='hg sum'
