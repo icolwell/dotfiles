@@ -48,17 +48,12 @@ main()
 	echo "${APPS[@]}"
 	echo ""
 
-	echo "Atom packages to be installed:"
-	echo "${ATOM_PACKAGES[@]}"
-	echo ""
-
 	echo "Custom install scripts found:"
 	echo "${CUSTOM_INSTALLS[@]}"
 	echo ""
 
 	echo "Installing ..."
 	sudo apt-get -y install "${APPS[@]}"
-	install_atom_packages "${ATOM_PACKAGES[@]}"
 
 	echo "Running custom install scripts ..."
 	for CUSTOM_INSTALL in "${CUSTOM_INSTALLS[@]}"; do
@@ -87,16 +82,11 @@ repository_additions()
 load_dotfile_configs()
 {
 	APT_PKG_FILE="$1/dotfile_config/apt_packages.txt"
-	ATOM_PKG_FILE="$1/dotfile_config/atom_packages.txt"
 	DEBCONF_FILE="$1/dotfile_config/debconf_selections.txt"
 	CUSTOM_INSTALL_FILE="$1/dotfile_config/install.bash"
 
 	if [ -f "$APT_PKG_FILE" ]; then
 		mapfile -t -O "${#APPS[@]}" APPS < "$APT_PKG_FILE"
-	fi
-
-	if [ -f "$ATOM_PKG_FILE" ]; then
-		mapfile -t -O "${#ATOM_PACKAGES[@]}" ATOM_PACKAGES < "$ATOM_PKG_FILE"
 	fi
 
 	if [ -f "$DEBCONF_FILE" ]; then
@@ -106,18 +96,6 @@ load_dotfile_configs()
 	if [ -f "$CUSTOM_INSTALL_FILE" ]; then
 		CUSTOM_INSTALLS+=("$CUSTOM_INSTALL_FILE")
 	fi
-}
-
-install_atom_packages()
-{
-	ARRAY=("$@")
-	for atmpkg in "${ARRAY[@]}"; do
-		if [[ ! -d "$HOME/.atom/packages/$atmpkg" ]]; then
-			apm install "$atmpkg"
-		else
-			echo "atom package $atmpkg is already installed"
-		fi
-	done
 }
 
 not_installed() {

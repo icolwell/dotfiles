@@ -35,7 +35,6 @@ config_container_folder/
         dotfile_config/
             class.txt
             apt_packages.txt
-            atom_packages.txt
             debconf_selections.txt
             install.bash
             configure.bash
