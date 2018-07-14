@@ -81,28 +81,6 @@ repository_additions()
 	#sudo add-apt-repository -y ppa:minecraft-installer-peeps/minecraft-installer
 	#sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 
-	# Spotify
-	#sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0DF731E45CE24F27EEEB1450EFDC8610341D9410
-	#echo 'deb http://repository.spotify.com stable non-free' | sudo tee /etc/apt/sources.list.d/spotify.list
-
-	# Opera
-	#wget -O - http://deb.opera.com/archive.key | sudo apt-key add -
-	#echo 'deb https://deb.opera.com/opera-stable/ stable non-free' | sudo tee /etc/apt/sources.list.d/opera-stable.list
-
-	# Chrome
-	#wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-	#echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' | sudo tee /etc/apt/sources.list.d/google-chrome.list
-
-	# Syncthing
-	curl -s https://syncthing.net/release-key.txt | sudo apt-key add -
-	echo "deb https://apt.syncthing.net/ syncthing stable" | sudo tee /etc/apt/sources.list.d/syncthing.list
-
-	# git-lfs
-	curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
-
-	# Docker
-	#curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-
 	echo "Updating package lists ..."
 	sudo apt-get update -qq
 }

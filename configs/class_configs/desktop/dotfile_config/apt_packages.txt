@@ -4,10 +4,8 @@ clang
 clang-format
 default-jdk
 default-jre
-docker-ce
 filezilla
 gimp
-google-chrome-stable
 gpsprune
 inkscape
 josm
@@ -17,13 +15,10 @@ lm-sensors
 mercurial
 octave
 openvpn
-opera-stable
 pandoc
 pavucontrol
 pinta
 python-pip
-spotify-client
-syncthing
 texlive
 texlive-latex-extra
 texlive-science
