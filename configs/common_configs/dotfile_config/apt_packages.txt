@@ -6,7 +6,6 @@ htop
 nmap
 screen
 ssh
-syncthing
 tmux
 tree
 traceroute

@@ -1,4 +1,3 @@
-atom
 android-tools-adb
 clang
 clang-format
