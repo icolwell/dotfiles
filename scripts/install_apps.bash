@@ -14,7 +14,7 @@ CONFIG_DIRS=(
 
 main()
 {
-	sudo -v
+	# sudo -v
 	if [ "$1" == '-c' ]; then
 		echo "Installing common apps only ..."
 	else
