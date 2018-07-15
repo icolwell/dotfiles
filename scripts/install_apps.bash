@@ -72,8 +72,6 @@ repository_additions()
 	sudo apt-get -qq install curl wget software-properties-common
 	#sudo add-apt-repository "deb http://archive.canonical.com/ubuntu $(lsb_release -sc) partner"
 	#sudo add-apt-repository multiverse
-	#sudo add-apt-repository -y ppa:minecraft-installer-peeps/minecraft-installer
-	#sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 
 	echo "Updating package lists ..."
 	sudo apt-get update -qq
