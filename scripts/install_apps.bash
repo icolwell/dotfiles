@@ -14,7 +14,10 @@ CONFIG_DIRS=(
 
 main()
 {
-	# sudo -v
+	if [ -z "CONTINUOUS_INTEGRATION" ]; then
+		sudo -v
+	fi
+	
 	if [ "$1" == '-c' ]; then
 		echo "Installing common apps only ..."
 	else
