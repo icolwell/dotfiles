@@ -1,0 +1,14 @@
+ctags
+expect
+git
+gparted
+htop
+nmap
+screen
+ssh
+tmux
+tree
+traceroute
+unzip
+vim
+p7zip-full

@@ -4,238 +4,99 @@ set -e
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 REPO_DIR="$(dirname "$SCRIPT_DIR")"
 
-#------------------------------------------------------------------------------#
-# App lists
+source "$SCRIPT_DIR/utils.bash"
 
-# The 'core' is a collection of lightweight apps, these are installed when
-# time is too short for a full install
-CORE_APPS=(
-	clang
-	clang-format
-	ctags
-	expect
-	git
-	git-lfs
-	gparted
-	htop
-	jstest-gtk
-	nmap
-	screen
-	ssh
-	tmux
-	tree
-	traceroute
-	unzip
-	vim
-	xclip
+# Config locations
+CONFIG_DIRS=(
+	"$REPO_DIR/configs"
+	"$HOME/df_sync/configs"
 )
-
-MAIN_APPS=(
-	atom
-	android-tools-adb
-	default-jdk
-	default-jre
-	docker-ce
-	filezilla
-	gimp
-	gpsprune
-	inkscape
-	josm
-	keepassx
-	lm-sensors
-	mercurial
-	npm
-	octave
-	openvpn
-	opera-stable
-	pandoc
-	pavucontrol
-	pinta
-	python-pip
-	spotify-client
-	syncthing
-	texlive
-	texlive-latex-extra
-	texlive-science
-	texstudio
-	virtualbox
-	vlc
-	wireshark
-)
-
-# Apps not usually needed on 'work' machines
-ENTERTAINMENT_APPS=(
-	minecraft-installer
-	nautilus-dropbox
-	steam
-)
-
-# This list is specifically for plugin packages for the Atom text editor
-ATOM_PACKAGES=(
-	atom-beautify
-	autocomplete-clang
-	busy-signal
-	clang-format
-	git-time-machine
-	intentions
-	linter
-	linter-ui-default
-	linter-clang
-	linter-shellcheck
-	linter-cpplint
-	language-lua
-	language-cmake
-	markdown-pdf
-	minimap
-)
-
-#------------------------------------------------------------------------------#
-# Main entry point of script
 
 main()
 {
+	if [ -z "CONTINUOUS_INTEGRATION" ]; then
+		sudo -v
+	fi
+	
+	if [ "$1" == '-c' ]; then
+		echo "Installing common apps only ..."
+	else
+		for CONFIG_DIR in "${CONFIG_DIRS[@]}"; do
+			get_classes "$CONFIG_DIR"
+		done
+
+		confirm_classes
+	fi
+
 	repository_additions
 	clear
 
-	sudo debconf-set-selections -v "$REPO_DIR/configs/debconf_selections.txt"
+	# CUSTOM_INSTALLS=()
+	for CONFIG_DIR in "${CONFIG_DIRS[@]}"; do
+		echo "Loading configs from $CONFIG_DIR ..."
+		# Always install common apps
+		load_dotfile_configs "$CONFIG_DIR/common_configs"
 
-	case "$1" in
-		-e)
-			echo "Installing entertainment apps only ..."
-			sudo apt-get -y install "${ENTERTAINMENT_APPS[@]}"
-			;;
-		-c)
-			echo "Installing core apps only ..."
-			sudo apt-get -y install "${CORE_APPS[@]}"
-			;;
-		-a)
-			echo "Installing all apps ..."
-			sudo apt-get -y install "${ENTERTAINMENT_APPS[@]}"
-			# Fall through
-			;;&
-		*)
-			echo "Installing core and main apps ..."
-			default_install
-			;;
-	esac
+		# Install apps based on class
+		for CLASS in "${CLASSES[@]}"; do
+			load_dotfile_configs "$CONFIG_DIR/class_configs/$CLASS"
+		done
+
+		# Install system-specific apps
+		load_dotfile_configs "$CONFIG_DIR/sys_specific_configs/$HOSTNAME"
+	done
+
+	echo ""
+	echo "Apps to be installed:"
+	echo "${APPS[@]}"
+	echo ""
+
+	echo "Custom install scripts found:"
+	echo "${CUSTOM_INSTALLS[@]}"
+	echo ""
+
+	echo "Installing ..."
+	sudo apt-get -y install "${APPS[@]}"
+
+	echo "Running custom install scripts ..."
+	for CUSTOM_INSTALL in "${CUSTOM_INSTALLS[@]}"; do
+		bash "$CUSTOM_INSTALL"
+	done
+
+	echo ""
+	echo "Installation Complete!"
 }
 
 repository_additions()
 {
-	sudo apt-get -qq install curl wget
-	sudo add-apt-repository "deb http://archive.canonical.com/ubuntu $(lsb_release -sc) partner"
-	sudo add-apt-repository multiverse
-	sudo add-apt-repository -y ppa:webupd8team/atom
-	sudo add-apt-repository -y ppa:thomas-schiex/blender
-	sudo add-apt-repository -y ppa:minecraft-installer-peeps/minecraft-installer
-	sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+	# This list of respositories gets added to all machines, but the apps are
+	# only installed if they appear in the machine's list
 
-	# Spotify
-	sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0DF731E45CE24F27EEEB1450EFDC8610341D9410
-	echo 'deb http://repository.spotify.com stable non-free' | sudo tee /etc/apt/sources.list.d/spotify.list
-
-	# Opera
-	wget -O - http://deb.opera.com/archive.key | sudo apt-key add -
-	echo 'deb https://deb.opera.com/opera-stable/ stable non-free' | sudo tee /etc/apt/sources.list.d/opera-stable.list
-
-	# Syncthing
-	curl -s https://syncthing.net/release-key.txt | sudo apt-key add -
-	echo "deb https://apt.syncthing.net/ syncthing stable" | sudo tee /etc/apt/sources.list.d/syncthing.list
-
-	# git-lfs
-	curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
-
-	# Docker
-	curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+	sudo apt-get -qq install curl wget software-properties-common
+	#sudo add-apt-repository "deb http://archive.canonical.com/ubuntu $(lsb_release -sc) partner"
+	#sudo add-apt-repository multiverse
 
 	echo "Updating package lists ..."
 	sudo apt-get update -qq
 }
 
-default_install()
+load_dotfile_configs()
 {
-	sudo apt-get -y install "${CORE_APPS[@]}"
-	sudo apt-get -y install "${MAIN_APPS[@]}"
-	install_atom_packages "${ATOM_PACKAGES[@]}"
+	APT_PKG_FILE="$1/dotfile_config/apt_packages.txt"
+	DEBCONF_FILE="$1/dotfile_config/debconf_selections.txt"
+	CUSTOM_INSTALL_FILE="$1/dotfile_config/install.bash"
 
-	# Other more complicated installations
-	install_chrome
-	install_ros
-	install_go
-}
-
-#------------------------------------------------------------------------------#
-# Custom Installs
-
-install_chrome()
-{
-	if not_installed 'google-chrome-stable'; then
-		TEMP_DIR=$(mktemp -d)
-		cd "$TEMP_DIR"
-		wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-		sudo apt -y install ./google-chrome-stable_current_amd64.deb
+	if [ -f "$APT_PKG_FILE" ]; then
+		mapfile -t -O "${#APPS[@]}" APPS < "$APT_PKG_FILE"
 	fi
-}
 
-install_go()
-{
-	VERSION="1.8.3"
-
-	if [ -d /usr/local/go ]; then
-		echo "GO is already installed"
-	else
-		TEMP_DIR=$(mktemp -d)
-		cd "$TEMP_DIR"
-		wget https://storage.googleapis.com/golang/go$VERSION.linux-amd64.tar.gz
-		sudo tar -C /usr/local -xzf go$VERSION.linux-amd64.tar.gz
+	if [ -f "$DEBCONF_FILE" ]; then
+		sudo debconf-set-selections -v "$DEBCONF_FILE"
 	fi
-}
 
-install_ros()
-{
-	UBUNTU_CODENAME=$(lsb_release -s -c)
-	case $UBUNTU_CODENAME in
-		trusty)
-			ROS_DISTRO=indigo;;
-		xenial)
-			ROS_DISTRO=kinetic;;
-		*)
-			echo "Unsupported version of Ubuntu detected. Only trusty (14.04.*) and xenial (16.04.*) are currently supported."
-		exit 1
-	esac
-
-	sudo sh -c "echo \"deb http://packages.ros.org/ros/ubuntu $UBUNTU_CODENAME main\" > /etc/apt/sources.list.d/ros-latest.list"
-	wget -qO - http://packages.ros.org/ros.key | sudo apt-key add -
-
-	echo "Updating package lists ..."
-	sudo apt-get -qq update
-
-	echo "Installing ROS $ROS_DISTRO ..."
-	sudo apt-get -qq install ros-$ROS_DISTRO-desktop python-rosinstall > /dev/null
-
-	source /opt/ros/$ROS_DISTRO/setup.bash
-
-	# Prepare rosdep to install dependencies.
-	echo "Updating rosdep ..."
-	if [ ! -d /etc/ros/rosdep ]; then
-		sudo rosdep init > /dev/null
+	if [ -f "$CUSTOM_INSTALL_FILE" ]; then
+		CUSTOM_INSTALLS+=("$CUSTOM_INSTALL_FILE")
 	fi
-	rosdep update > /dev/null
-}
-
-#------------------------------------------------------------------------------#
-# Utility functions
-
-install_atom_packages()
-{
-	ARRAY=("$@")
-	for atmpkg in "${ARRAY[@]}"; do
-		if [[ ! -d "$HOME/.atom/packages/$atmpkg" ]]; then
-			apm install "$atmpkg"
-		else
-			echo "atom package $atmpkg is already installed"
-		fi
-	done
 }
 
 not_installed() {

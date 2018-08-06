@@ -21,3 +21,23 @@ Use the `-a` flag to install apps from all categories.
 Simply calls the above two scripts. It is meant to be used right after
 installing Ubuntu or to update the existing system if any dotfiles or apps
 change.
+
+
+# Config Structure
+
+```
+config_container_folder/
+    config_category_folder/
+        home/
+            [configs relative to $HOME]
+        root/
+            [configs relative to root]
+        dotfile_config/
+            class.txt
+            apt_packages.txt
+            debconf_selections.txt
+            install.bash
+            configure.bash
+```
+
+## Process

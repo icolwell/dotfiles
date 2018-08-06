@@ -35,6 +35,7 @@
     warnOnLargeFileLimit: 10
   editor:
     showInvisibles: true
+    softWrap: true
     tabLength: 4
   "exception-reporting":
     userId: "d3d9a1ba-9434-12d6-c4ba-691a7b4b9924"

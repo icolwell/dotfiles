@@ -1,0 +1,14 @@
+[Unit]
+Description=Transmission BitTorrent Daemon
+After=network.target
+RequiresMountsFor=/mnt/external_hd/media
+
+[Service]
+User=debian-transmission
+Type=notify
+ExecStart=/usr/bin/nice -1 /usr/bin/transmission-daemon -f --log-error
+ExecStop=/bin/kill -s STOP $MAINPID
+ExecReload=/bin/kill -s HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target

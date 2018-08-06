@@ -1,0 +1,7 @@
+dirmngr
+kodi
+nfs-kernel-server
+transmission-cli
+transmission-common
+transmission-daemon
+

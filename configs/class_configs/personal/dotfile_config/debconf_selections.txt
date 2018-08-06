@@ -1,0 +1,3 @@
+# Do you agree to all terms of the Steam License Agreement?
+# Choices: I DECLINE, I AGREE
+steam steam/question select I AGREE
