@@ -204,3 +204,6 @@ define_aliases
 application_specific
 
 # Anything after this line was added automatically by some script
+# Install Ruby Gems to ~/gems
+export GEM_HOME=$HOME/gems
+export PATH=$HOME/gems/bin:$PATH
