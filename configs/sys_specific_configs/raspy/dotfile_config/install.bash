@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+echo "Installing Pi-Hole ..."
+curl -sSL https://install.pi-hole.net | bash
+
 #TODO: Move this to install_script repo
 # RPI monitor install
 
