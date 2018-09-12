@@ -157,6 +157,7 @@ define_aliases()
 	alias clang=clang-3.5
 	alias sbrc='source ~/.bashrc'
 	alias clr='clear'
+	alias sizes='du -sch .[!.]* * |sort -h'
 }
 
 application_specific()
@@ -188,6 +189,9 @@ application_specific()
 
 	# npm, yarn
 	export BROWSER=none
+
+	# CUDA
+	PATH=$PATH:/usr/local/cuda/bin
 
 	export PATH
 }
