@@ -21,7 +21,7 @@ ATOM_PACKAGES=(
 
 custom_installs() {
 	curl -sSL https://raw.githubusercontent.com/icolwell/install_scripts/master/ros_install.bash | bash
-
+	curl -sSL https://raw.githubusercontent.com/icolwell/install_scripts/master/opera_install.bash | bash
 	curl -sSL https://raw.githubusercontent.com/icolwell/install_scripts/master/atom_install.bash | bash
 
 	# git-lfs
