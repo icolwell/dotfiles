@@ -3,6 +3,7 @@ clang
 clang-format
 default-jdk
 default-jre
+docker.io
 filezilla
 gimp
 gpsprune

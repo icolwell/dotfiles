@@ -48,7 +48,7 @@ configure_systemd()
 	# Systemd does not allow symlinks which is quite frustrating
 	# We must place actual service files, not symlinks
 	mkdir -p ~/.config/systemd/user
-	wget -qP ~/.config/systemd/user/ https://raw.githubusercontent.com/syncthing/syncthing/master/etc/linux-systemd/user/syncthing.service
+	wget -qO ~/.config/systemd/user/syncthing.service https://raw.githubusercontent.com/syncthing/syncthing/master/etc/linux-systemd/user/syncthing.service
 	systemctl --user enable syncthing.service
 	systemctl --user start syncthing.service
 
