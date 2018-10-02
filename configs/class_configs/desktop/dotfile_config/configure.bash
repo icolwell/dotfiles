@@ -25,18 +25,24 @@ configure_gsettings()
 
 configure_thunderbird()
 {
-	# Thunderbird
+	MAIL_ACCOUNTS=(
+		imap-mail.outlook.com
+		imap.gmail.com
+		connect.uwaterloo.ca
+	)
+
 	TB_PROFILE='Ian'
 	TB_PROFILE_DIR="$HOME/.thunderbird/$TB_PROFILE"
 	if [ -d $TB_PROFILE_DIR ] && hash thunderbird 2>/dev/null ; then
-		# Remove any existing links or files
-		rm -f ~/.thunderbird/Ian/ImapMail/imap-mail.outlook.com/msgFilterRules.dat
-		rm -f ~/.thunderbird/Ian/ImapMail/imap.gmail.com/msgFilterRules.dat
-		rm -f ~/.thunderbird/Ian/ImapMail/connect.uwaterloo.ca/msgFilterRules.dat
-
-		ln -sf "$HOME/sync/dotfiles/thunderbird/imap-mail.outlook.com/msgFilterRules.dat" ~/.thunderbird/Ian/ImapMail/imap-mail.outlook.com/msgFilterRules.dat
-		ln -sf "$HOME/sync/dotfiles/thunderbird/imap.gmail.com/msgFilterRules.dat" ~/.thunderbird/Ian/ImapMail/imap.gmail.com/msgFilterRules.dat
-		ln -sf "$HOME/sync/dotfiles/thunderbird/connect.uwaterloo.ca/msgFilterRules.dat" ~/.thunderbird/Ian/ImapMail/connect.uwaterloo.ca/msgFilterRules.dat
+		for MAIL_ACCOUNT in "${MAIL_ACCOUNTS[@]}"; do
+			MAIL_DIR="$HOME/.thunderbird/Ian/ImapMail/$MAIL_ACCOUNT"
+			if [ -d "$MAIL_DIR" ]; then
+				rm -f "$MAIL_DIR/msgFilterRules.dat"
+				ln -sf "$HOME/sync/dotfiles/thunderbird/$MAIL_ACCOUNT/msgFilterRules.dat" "$MAIL_DIR/msgFilterRules.dat"
+			else
+				echo "No mail folder called $MAIL_ACCOUNT found, skipping"
+			fi
+		done
 	else
 		echo "Warning: no thunderbird profile named $TB_PROFILE exists, skipping thunderbird configuration"
 	fi
