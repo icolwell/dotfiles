@@ -61,12 +61,6 @@ configure_systemd()
 	echo "systemd services enabled."
 }
 
-misc()
-{
-	mkdir -p "$HOME/bin"
-}
-
 configure_thunderbird
 configure_gsettings
 configure_systemd
-misc

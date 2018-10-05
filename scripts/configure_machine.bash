@@ -65,8 +65,6 @@ setup_vim()
 		git clone https://github.com/VundleVim/Vundle.vim.git "$BUNDLE/Vundle.vim"
 	fi
 
-	mkdir -p "$HOME/.vim/colors"
-
 	# Update existing (or new) installation
 	cd "$BUNDLE/Vundle.vim"
 	git pull -q
@@ -143,21 +141,23 @@ link_config()
 	# $3 = Full path to destination root dir
 	LINK="$3$1"
 
-	# Add sudo command if the folder is owned by root
+	# Only create directories in the user's home. Missing directories in root
+	# usually means the app is not installed.
 	CONTAINING_DIR=$(dirname "$LINK")
-    if [ ! -d "$CONTAINING_DIR" ]; then
-        echo "Skipping $LINK because containing folder does not exist"
-        return
-    fi
+	if [ ! -d "$CONTAINING_DIR" ] && [[ ! "$CONTAINING_DIR" == *"$HOME"* ]]; then
+		echo "Skipping $LINK because containing folder does not exist"
+		return
+	fi
 
+	mkdir -p "$CONTAINING_DIR"
+
+	# Add sudo command if the folder is owned by root
 	prefix=""
 	if [ "$(stat -c '%U' "$CONTAINING_DIR")" == "root" ]; then
 		prefix="sudo"
 	fi
 
 	backup_config "$prefix" "$LINK"
-
-	$prefix mkdir -p "$CONTAINING_DIR"
 	$prefix rm -f "$LINK"
 	$prefix ln -sf "$2$1" "$LINK"
 }
