@@ -65,6 +65,8 @@ setup_vim()
 		git clone https://github.com/VundleVim/Vundle.vim.git "$BUNDLE/Vundle.vim"
 	fi
 
+	mkdir -p "$HOME/.vim/colors"
+
 	# Update existing (or new) installation
 	cd "$BUNDLE/Vundle.vim"
 	git pull -q
