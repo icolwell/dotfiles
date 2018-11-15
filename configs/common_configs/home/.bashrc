@@ -165,8 +165,6 @@ application_specific()
 	# ROS
 	source_file /opt/ros/kinetic/setup.bash
 	source_file ~/catkin_ws/devel/setup.bash
-	export QNXROS_WS="$HOME/qnx_catkin_ws"
-	source_file ~/autonomoose/renesas-demo/scripts/qnx/qnxros.bash
 
 	# anm_sim
 	source_file ~/autonomoose/anm_sim/vrep_test_suite/scripts/test_suite_lib.bash
@@ -196,6 +194,13 @@ application_specific()
 	export PATH
 }
 
+machine_specific()
+{
+	# Source any additional machine or class-specific settings that may exist
+	source_file ~/.config/bashrc/public/*.bashrc
+	source_file ~/.config/bashrc/private/*.bashrc
+}
+
 source_file()
 {
 	if [ -f "$1" ]; then
@@ -206,6 +211,7 @@ source_file()
 terminal_coloring
 define_aliases
 application_specific
+machine_specific
 
 # Anything after this line was added automatically by some script
 # Install Ruby Gems to ~/gems
