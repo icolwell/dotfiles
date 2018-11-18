@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-echo "Installing Pi-Hole ..."
-curl -sSL https://install.pi-hole.net | bash
+# Create dir so that pihole configs will get linked
+mkdir -p /etc/pihole
 
 #TODO: Move this to install_script repo
 # RPI monitor install
