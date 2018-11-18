@@ -152,8 +152,8 @@ link_config()
 	mkdir -p "$CONTAINING_DIR"
 
 	# Add sudo command if the folder is owned by root
-    dir_user="$(stat -c '%U' "$CONTAINING_DIR")"
-    file_user="$(stat -c '%U' "$LINK")"
+    #dir_user="$(stat -c '%U' "$CONTAINING_DIR")"
+    #file_user="$(stat -c '%U' "$LINK")"
 
 	prefix=""
 	if [ "$(stat -c '%U' "$CONTAINING_DIR")" != "$USER" ]; then
@@ -171,7 +171,7 @@ backup_config()
 	# $2 = location of the file to backup
 
 	FILE="$2"
-	if [ ! -L "$FILE" ] && [ -f "$FILE" ]; then
+	if [ -f "$FILE" ] && [ ! -L "$FILE" ]; then
 		# File is not a symlink, backup
 		echo "Backing up file: $FILE"
 		$1 cp "$FILE" "$FILE.backup"
