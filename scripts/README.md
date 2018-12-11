@@ -1,43 +1,32 @@
 # Scripts
 
-**configure_desktop.bash**  
-Symlinks any configs found in the `configs` folder or any other private folders
-you specify. Configuration of Thunderbird, unity and vim is also performed
-(Credit for any Vim configs/setup in this repo goes to [chutsu](https://github.com/chutsu/dotfiles)).
+**install_apps.bash [-c]**  
+Automatically installs ubuntu packages defined in the
+`dotfile_config/apt_packages.txt` files.
+After apt installation, the `dotfile_config/install.bash` scripts are executed
+if they exist.
 
-**install_apps.bash**  
-Automatically installs ubuntu packages and atom plugins as well as some more
-complicated custom installs (ROS, chrome).
+Use the `-c` flag to install only common apps.
 
-Use the `-c` flag to indicate only a core installation (core installation
-performs a smaller install if time is limited).
+**configure_machine.bash [-c]**  
+Symlinks configs found in all applicable config folders.
+Runs any `dotfile_config/configure.bash` scripts if they exist.
 
-Use the `-e` flag to install "entertainment" apps. Basically just a category of
-apps that I don't want installed by default on work machines.
-
-Use the `-a` flag to install apps from all categories.
+Use the `-c` flag to only link common configs.
 
 **initialize_system.bash**  
 Simply calls the above two scripts. It is meant to be used right after
 installing Ubuntu or to update the existing system if any dotfiles or apps
 change.
 
-
-# Config Structure
-
-```
-config_container_folder/
-    config_category_folder/
-        home/
-            [configs relative to $HOME]
-        root/
-            [configs relative to root]
-        dotfile_config/
-            class.txt
-            apt_packages.txt
-            debconf_selections.txt
-            install.bash
-            configure.bash
-```
-
 ## Process
+
+Both `install_apps.bash` and `configure_machine.bash` start by loading all
+applicable classes and applying changes from all config container locations.
+configs are applied in the following order:
+1. common_configs
+2. class_configs
+3. sys_specific_configs
+
+So if the same config file exists in both common and class, the class-specific
+one will be used.

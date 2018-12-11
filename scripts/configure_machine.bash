@@ -6,12 +6,6 @@ REPO_DIR="$(dirname "$SCRIPT_DIR")"
 
 source "$SCRIPT_DIR/utils.bash"
 
-# Config locations
-CONFIG_DIRS=(
-	"$REPO_DIR/configs"
-	"$HOME/df_sync/configs"
-)
-
 main()
 {
 	sudo -v

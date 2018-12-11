@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+source "$SCRIPT_DIR/settings.bash"
+
 get_classes()
 {
 	# This function looks to see if any system-specific or class settings exist
