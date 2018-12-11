@@ -6,18 +6,12 @@ REPO_DIR="$(dirname "$SCRIPT_DIR")"
 
 source "$SCRIPT_DIR/utils.bash"
 
-# Config locations
-CONFIG_DIRS=(
-	"$REPO_DIR/configs"
-	"$HOME/df_sync/configs"
-)
-
 main()
 {
 	if [ -z "CONTINUOUS_INTEGRATION" ]; then
 		sudo -v
 	fi
-	
+
 	if [ "$1" == '-c' ]; then
 		echo "Installing common apps only ..."
 	else

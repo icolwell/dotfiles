@@ -6,12 +6,6 @@ REPO_DIR="$(dirname "$SCRIPT_DIR")"
 
 source "$SCRIPT_DIR/utils.bash"
 
-# Config locations
-CONFIG_DIRS=(
-	"$REPO_DIR/configs"
-	"$HOME/df_sync/configs"
-)
-
 main()
 {
 	sudo -v
@@ -25,7 +19,6 @@ main()
 		confirm_classes
 	fi
 
-	remove_stuff
 	link_stuff
 	setup_vim
 
@@ -36,15 +29,6 @@ main()
 
 	echo ""
 	echo "Configuration complete!"
-}
-
-remove_stuff()
-{
-	# Remove unused folders
-	rm -rf ~/Music
-	rm -rf ~/Videos
-	rm -rf ~/Templates
-	rm -rf ~/Examples
 }
 
 link_stuff()

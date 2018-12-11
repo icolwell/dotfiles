@@ -1,6 +1,15 @@
 #/bin/bash
 set -e
 
+remove_stuff()
+{
+	# Remove unused folders
+	rm -rf ~/Music
+	rm -rf ~/Videos
+	rm -rf ~/Templates
+	rm -rf ~/Examples
+}
+
 configure_gsettings()
 {
 	gsettings set com.canonical.Unity.Launcher favorites \
@@ -61,6 +70,7 @@ configure_systemd()
 	echo "systemd services enabled."
 }
 
+remove_stuff
 configure_thunderbird
 configure_gsettings
 configure_systemd
