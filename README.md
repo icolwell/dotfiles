@@ -1,4 +1,4 @@
-# dotfiles
+# dotfiles [![CircleCI](https://circleci.com/gh/icolwell/dotfiles.svg?style=svg)](https://circleci.com/gh/icolwell/dotfiles)
 
 This repo contains scripts to automatically install applications and configure
 both the desktop and terminal environment. The two main goals of this repo are:
@@ -94,7 +94,8 @@ list of all the classes that the machine belongs to.
 **debconf_selections.txt**: Contains any debconf commands to be set via
 `debconf-set-selections`.  
 **install.bash**: This script is run after the main install script.
-Place any custom install commands here.  
+Place any [custom install commands](https://github.com/icolwell/install_scripts)
+here.  
 **configure.bash**: This script is run after the main configure script.
 Place any custom configuration commands here.
 
