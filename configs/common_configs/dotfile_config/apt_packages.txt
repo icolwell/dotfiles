@@ -4,6 +4,7 @@ git
 gparted
 htop
 nmap
+p7zip-full
 screen
 ssh
 tmux
@@ -11,4 +12,4 @@ tree
 traceroute
 unzip
 vim
-p7zip-full
+whois

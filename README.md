@@ -123,7 +123,7 @@ See the [scripts README](scripts/README.md) for an explanation of the scripts.
 
 ## Continuous Integration Testing
 
-A [docker image](https://hub.docker.com/r/iancolwell/xenial_user/)
+A [docker image](https://hub.docker.com/r/iancolwell/xenial_desktop/)
 that emulates a typical Ubuntu 16.04 desktop installation is used to
 verify that all the installation scripts work as expected.
 
