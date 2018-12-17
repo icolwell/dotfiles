@@ -26,9 +26,6 @@ custom_installs() {
 	curl -sSL https://raw.githubusercontent.com/icolwell/install_scripts/master/syncthing_install.bash | bash
 	# curl -sSL https://raw.githubusercontent.com/icolwell/install_scripts/master/slack_install.bash | bash
 	curl -sSL https://raw.githubusercontent.com/icolwell/install_scripts/master/spotify_install.bash | bash
-
-	# git-lfs
-	curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
 }
 
 install_atom_packages()
