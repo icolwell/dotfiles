@@ -37,6 +37,12 @@ if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
 	debian_chroot=$(cat /etc/debian_chroot)
 fi
 
+machine_specific()
+{
+	# Source any machine or class-specific settings that may exist
+	source_file ~/.config/bashrc/*.bashrc
+}
+
 terminal_coloring()
 {
 	WHITE="\[\033[1;37m\]"
@@ -46,6 +52,7 @@ terminal_coloring()
 	LIGHT_BLUE="\[\033[1;94m\]"
 	ORANGE="\[\033[38;5;208m\]"
 	NO_CLR="\[\033[0m\]"
+	: ${HOST_CLR:="$ORANGE"}
 
 	# set a fancy prompt (non-color, unless we know we "want" color)
 	case "$TERM" in
@@ -78,7 +85,7 @@ terminal_coloring()
 	esac
 
 	if [ "$color_prompt" = yes ]; then
-		PS1="${debian_chroot:+($debian_chroot)}$ORANGE\u$NO_CLR@$ORANGE\h$NO_CLR:\W$GREEN\$(parse_git_branch)$NO_CLR\$ "
+		PS1="${debian_chroot:+($debian_chroot)}$ORANGE\u$NO_CLR@$HOST_CLR\h$NO_CLR:\W$GREEN\$(parse_git_branch)$NO_CLR\$ "
 	else
 		PS1='${debian_chroot:+($debian_chroot)}\u@\h:\W$(parse_git_branch)\$ '
 	fi
@@ -194,13 +201,6 @@ application_specific()
 	export PATH
 }
 
-machine_specific()
-{
-	# Source any additional machine or class-specific settings that may exist
-	source_file ~/.config/bashrc/public/*.bashrc
-	source_file ~/.config/bashrc/private/*.bashrc
-}
-
 source_file()
 {
 	if [ -f "$1" ]; then
@@ -208,10 +208,10 @@ source_file()
 	fi
 }
 
+machine_specific
 terminal_coloring
 define_aliases
 application_specific
-machine_specific
 
 # Anything after this line was added automatically by some script
 # Install Ruby Gems to ~/gems
