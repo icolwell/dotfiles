@@ -40,7 +40,9 @@ fi
 machine_specific()
 {
 	# Source any machine or class-specific settings that may exist
-	source_file ~/.config/bashrc/*.bashrc
+	while source_file ~/.config/bashrc/*.bashrc; do
+		:
+	done
 }
 
 terminal_coloring()
@@ -205,6 +207,8 @@ source_file()
 {
 	if [ -f "$1" ]; then
 		source "$1"
+	else
+		return 1
 	fi
 }
 
