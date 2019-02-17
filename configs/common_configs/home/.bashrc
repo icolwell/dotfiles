@@ -40,13 +40,9 @@ fi
 machine_specific()
 {
 	# Source any machine or class-specific settings that may exist
-	# while [ $(source_file ~/.config/bashrc/*.bashrc) == 0 ]; do
-	# 	:
-	# done
 	for filename in $HOME/.config/bashrc/*.bashrc; do
 		source_file "$filename"
 	done
-
 }
 
 terminal_coloring()

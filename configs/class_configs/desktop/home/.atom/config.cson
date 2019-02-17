@@ -35,6 +35,7 @@
     warnOnLargeFileLimit: 10
   editor:
     showInvisibles: true
+    softTabs: false
     softWrap: true
     tabLength: 4
   "exception-reporting":
