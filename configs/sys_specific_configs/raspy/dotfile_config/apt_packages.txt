@@ -1,5 +1,4 @@
 apache2
-dirmngr
 kodi
 libapache2-mod-php7.0
 mysql-server
