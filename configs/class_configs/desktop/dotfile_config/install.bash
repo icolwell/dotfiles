@@ -3,6 +3,7 @@ set -e
 
 ATOM_PACKAGES=(
 	atom-beautify
+	auto-detect-indentation
 	autocomplete-clang
 	busy-signal
 	clang-format

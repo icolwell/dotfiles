@@ -1,0 +1,2 @@
+'atom-text-editor':
+  'ctrl-I': 'auto-detect-indentation:show-indentation-selector'

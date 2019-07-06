@@ -79,3 +79,11 @@
 ".cmake.source.template":
   editor:
     tabLength: 4
+"auto-detect-indentation":
+  indentationTypes: [
+    {
+      name: "Best Indent"
+      softTabs: true
+      tabLength: 16
+    }
+  ]
