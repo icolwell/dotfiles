@@ -131,7 +131,7 @@ define_aliases()
 	source_file ~/.bash_aliases
 
 	# ls aliases
-	alias ll='ls -alF'
+	alias ll='ls -alFh'
 	alias la='ls -A'
 	alias l='ls -CF'
 
@@ -146,6 +146,7 @@ define_aliases()
 	alias gitc='git commit -m'
 	alias gitp='git pull'
 	alias gitsr='git submodule update --recursive'
+	alias gitl='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit'
 
 	# mercurial aliases
 	alias hgs='hg sum'
@@ -174,12 +175,6 @@ application_specific()
 	# ROS
 	source_file /opt/ros/kinetic/setup.bash
 	source_file ~/catkin_ws/devel/setup.bash
-
-	# anm_sim
-	source_file ~/autonomoose/anm_sim/vrep_test_suite/scripts/test_suite_lib.bash
-
-	# V-REP
-	export VREP_ROOT=$HOME/opt/vrep/V-REP_PRO_EDU_V3_5_0_Linux
 
 	# GO
 	export GOPATH=$HOME/gocode
