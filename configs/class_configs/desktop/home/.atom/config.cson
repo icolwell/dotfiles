@@ -51,9 +51,12 @@
   "remote-edit":
     storePasswordsUsingKeytar: true
   "spell-check":
-    useLocales: false
+    locales: [
+      "en_CA"
+    ]
   "tree-view":
     hideIgnoredNames: true
+    hideVcsIgnoredFiles: false
     squashDirectoryNames: true
   welcome:
     showOnStartup: false
