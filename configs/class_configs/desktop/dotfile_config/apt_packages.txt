@@ -24,6 +24,7 @@ texlive
 texlive-latex-extra
 texlive-science
 texstudio
+thunderbird
 virtualbox
 vlc
 wireshark
