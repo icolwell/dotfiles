@@ -12,21 +12,17 @@ remove_stuff()
 
 configure_gsettings()
 {
-	gsettings set com.canonical.Unity.Launcher favorites \
-		"['application://unity-control-center.desktop',
-		'application://gnome-system-monitor.desktop',
-		'application://org.gnome.Nautilus.desktop',
-		'application://opera.desktop',
-		'application://atom.desktop',
-		'unity://expo-icon',
-		'unity://devices',
-		'unity://running-apps']"
+	# Launcher favorites
+	gsettings set org.gnome.shell favorite-apps \
+		"['gnome-control-center.desktop',
+		'org.gnome.Nautilus.desktop',
+		'org.gnome.Terminal.desktop',
+		'opera.desktop',
+		'atom.desktop',
+		'thunderbird.desktop']"
 
 	gsettings set org.gnome.nautilus.preferences default-folder-viewer 'list-view'
-	gsettings set org.compiz.unityshell:/org/compiz/profiles/unity/plugins/unityshell/ icon-size 42
-
-	# Disable sticky edges
-	dconf write /org/compiz/profiles/unity/plugins/unityshell/launcher-capture-mouse false
+	gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 36
 
 	# Default apps
 	xdg-settings set default-web-browser opera.desktop
@@ -35,7 +31,7 @@ configure_gsettings()
 configure_thunderbird()
 {
 	MAIL_ACCOUNTS=(
-		imap-mail.outlook.com
+		outlook.office365.com
 		imap.gmail.com
 		connect.uwaterloo.ca
 	)
