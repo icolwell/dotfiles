@@ -13,8 +13,8 @@ Additional Features
 - Easy support for host-specific configs.
 - debconf preconfiguration to avoid user input prompts during installation.
 
-NOTE: These dotfiles and scripts have only been tested on Ubuntu 16.04. It is
-possible that they no longer work for 14.04 or other versions.
+NOTE: These dotfiles and scripts have only been tested on Ubuntu 18.04. It is
+possible that they no longer work for 16.04 or other versions.
 
 ## Installation Instructions
 
