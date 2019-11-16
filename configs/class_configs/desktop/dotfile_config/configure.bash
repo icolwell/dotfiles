@@ -21,8 +21,17 @@ configure_gsettings()
 		'atom.desktop',
 		'thunderbird.desktop']"
 
+	# List content in file browser
 	gsettings set org.gnome.nautilus.preferences default-folder-viewer 'list-view'
+
+	# Icon size of dock apps
 	gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 36
+
+	# AM/PM clock view
+	gsettings set org.gnome.desktop.interface clock-format '12h'
+
+	# Show date in clock view
+	gsettings set org.gnome.desktop.interface clock-show-date 'true'
 
 	# Default apps
 	xdg-settings set default-web-browser opera.desktop
