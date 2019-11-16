@@ -1,4 +1,5 @@
 android-tools-adb
+ansible
 clang
 clang-format
 default-jdk
@@ -11,6 +12,8 @@ inkscape
 josm
 jstest-gtk
 keepassx
+libreoffice-calc
+libreoffice-writer
 lm-sensors
 mercurial
 octave
