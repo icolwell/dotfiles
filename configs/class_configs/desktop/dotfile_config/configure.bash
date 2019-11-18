@@ -52,7 +52,7 @@ configure_thunderbird()
 			MAIL_DIR="$HOME/.thunderbird/Ian/ImapMail/$MAIL_ACCOUNT"
 			if [ -d "$MAIL_DIR" ]; then
 				rm -f "$MAIL_DIR/msgFilterRules.dat"
-				ln -sf "$HOME/sync/dotfiles/thunderbird/$MAIL_ACCOUNT/msgFilterRules.dat" "$MAIL_DIR/msgFilterRules.dat"
+				ln -sf "$HOME/df_sync/thunderbird/$MAIL_ACCOUNT/msgFilterRules.dat" "$MAIL_DIR/msgFilterRules.dat"
 			else
 				echo "No mail folder called $MAIL_ACCOUNT found, skipping"
 			fi
