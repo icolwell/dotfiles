@@ -173,7 +173,7 @@ define_aliases()
 application_specific()
 {
 	# ROS
-	source_file /opt/ros/kinetic/setup.bash
+	source_file /opt/ros/melodic/setup.bash
 	source_file ~/catkin_ws/devel/setup.bash
 
 	# GO
