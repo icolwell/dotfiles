@@ -9,15 +9,16 @@ ATOM_PACKAGES=(
 	clang-format
 	git-time-machine
 	intentions
-	linter
-	linter-ui-default
-	linter-clang
-	linter-shellcheck
-	linter-cpplint
-	language-lua
 	language-cmake
+	language-lua
+	linter
+	linter-clang
+	linter-cpplint
+	linter-shellcheck
+	linter-ui-default
 	markdown-pdf
 	minimap
+	sort-lines
 )
 
 custom_installs() {
