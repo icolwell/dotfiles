@@ -1,6 +1,7 @@
 ctags
 expect
 git
+git-lfs
 gparted
 htop
 nmap
