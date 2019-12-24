@@ -8,6 +8,7 @@ docker.io
 filezilla
 gimp
 gpsprune
+gnome-tweaks
 inkscape
 josm
 jstest-gtk
