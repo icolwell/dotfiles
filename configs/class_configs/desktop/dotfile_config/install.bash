@@ -28,6 +28,9 @@ custom_installs() {
 	curl -sSL https://raw.githubusercontent.com/icolwell/install_scripts/master/syncthing_install.bash | bash
 	# curl -sSL https://raw.githubusercontent.com/icolwell/install_scripts/master/slack_install.bash | bash
 	curl -sSL https://raw.githubusercontent.com/icolwell/install_scripts/master/spotify_install.bash | bash
+	curl -sSL https://raw.githubusercontent.com/icolwell/install_scripts/master/docker_install.bash | bash
+	curl -sSL https://raw.githubusercontent.com/icolwell/install_scripts/master/signal_install.bash | bash
+	curl -sSL https://raw.githubusercontent.com/icolwell/install_scripts/master/chrome_install.bash | bash
 }
 
 install_atom_packages()
