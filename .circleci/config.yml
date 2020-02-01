@@ -2,7 +2,7 @@ version: 2
 jobs:
    build:
      docker:
-       - image: iancolwell/xenial_desktop:latest
+       - image: iancolwell/ubuntu:xenial_desktop
          environment:
            CONTINUOUS_INTEGRATION: TRUE
      steps:
