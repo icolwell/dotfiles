@@ -2,7 +2,7 @@ version: 2
 jobs:
    build:
      docker:
-       - image: iancolwell/ubuntu:xenial_desktop
+       - image: iancolwell/ubuntu:bionic_desktop
          environment:
            CONTINUOUS_INTEGRATION: TRUE
      steps:
