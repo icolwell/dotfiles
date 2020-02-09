@@ -8,7 +8,8 @@ source "$SCRIPT_DIR/utils.bash"
 
 main()
 {
-	sudo -v
+	# Hack for 'sudo -v' in docker containers
+	sudo echo -n
 	if [ "$1" == '-c' ]; then
 		echo "Applying common configs only ..."
 	else
