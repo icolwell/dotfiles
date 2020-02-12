@@ -73,7 +73,9 @@ configure_systemd()
 	mkdir -p ~/.config/systemd/user
 	wget -qO ~/.config/systemd/user/syncthing.service https://raw.githubusercontent.com/syncthing/syncthing/master/etc/linux-systemd/user/syncthing.service
 	systemctl --user enable syncthing.service
-	systemctl --user start syncthing.service
+	if [ -z "$CI" ]; then
+		systemctl --user start syncthing.service
+	fi
 
 	echo "systemd services enabled."
 }
