@@ -1,10 +1,13 @@
 version: 2
 jobs:
-   build:
-     docker:
-       - image: iancolwell/xenial_desktop:latest
-         environment:
-           CONTINUOUS_INTEGRATION: TRUE
-     steps:
-       - checkout
-       - run: bash scripts/install_apps.bash
+  build:
+    docker:
+      - image: iancolwell/ubuntu:bionic_desktop
+        environment:
+          CONTINUOUS_INTEGRATION: TRUE
+    steps:
+      - run: sudo apt-get -y install git openssh-client
+      - checkout
+      - run: mkdir -p "configs/sys_specific_configs/$HOSTNAME/dotfile_config"
+      - run: echo "desktop" >> "configs/sys_specific_configs/$HOSTNAME/dotfile_config/class.txt"
+      - run: bash scripts/initialize_system.bash
