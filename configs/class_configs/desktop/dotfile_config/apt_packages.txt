@@ -5,10 +5,11 @@ clang-format
 default-jdk
 default-jre
 docker.io
+ffmpeg
 filezilla
 gimp
-gpsprune
 gnome-tweaks
+gpsprune
 inkscape
 josm
 jstest-gtk
@@ -24,6 +25,7 @@ pandoc
 pavucontrol
 pinta
 python-pip
+simplescreenrecorder
 texlive
 texlive-latex-extra
 texlive-science
