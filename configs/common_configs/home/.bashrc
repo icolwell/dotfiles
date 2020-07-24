@@ -144,15 +144,10 @@ define_aliases()
 	alias gits='git status'
 	alias gita='git add -A . && git status'
 	alias gitc='git commit -m'
+	alias gituc='git reset HEAD~'
 	alias gitp='git pull'
 	alias gitsr='git submodule update --recursive'
 	alias gitl='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset" --abbrev-commit'
-
-	# mercurial aliases
-	alias hgs='hg sum'
-	alias hga='hg add && hg sum'
-	alias hgc='hg commit -m'
-	alias hgp='hg pull'
 
 	# TMUX
 	alias tmux='tmux -2'
@@ -173,8 +168,9 @@ define_aliases()
 application_specific()
 {
 	# ROS
-	source_file /opt/ros/melodic/setup.bash
-	source_file ~/catkin_ws/devel/setup.bash
+	source_file /opt/ros/melodic/setup.bash --extend
+	source_file ~/catkin_ws/devel/setup.bash --extend
+	export ROSCONSOLE_FORMAT='[${severity}][${node}]: ${message}'
 
 	# GO
 	export GOPATH=$HOME/gocode
