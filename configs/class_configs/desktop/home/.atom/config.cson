@@ -1,6 +1,8 @@
 "*":
   "autocomplete-clang":
     clangCommand: "clang-3.5"
+  "bracket-matcher":
+    autocompleteBrackets: false
   "clang-format":
     formatCOnSave: false
     formatCPlusPlusOnSave: false
@@ -29,6 +31,7 @@
       "language-markdown"
       "nuclide"
       "remote-edit"
+      "rst-preview"
     ]
     excludeVcsIgnoredPaths: false
     telemetryConsent: "no"
@@ -57,7 +60,6 @@
     ]
   "tree-view":
     hideIgnoredNames: true
-    hideVcsIgnoredFiles: false
     squashDirectoryNames: true
   welcome:
     showOnStartup: false

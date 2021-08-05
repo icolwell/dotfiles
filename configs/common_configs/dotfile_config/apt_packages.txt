@@ -8,9 +8,10 @@ nmap
 p7zip-full
 screen
 ssh
+sshfs
 tmux
-tree
 traceroute
+tree
 unzip
 vim
 whois
