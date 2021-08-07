@@ -10,6 +10,7 @@ filezilla
 gimp
 gnome-tweaks
 gpsprune
+hunspell-en-ca
 inkscape
 josm
 jstest-gtk
@@ -18,6 +19,7 @@ libreoffice-calc
 libreoffice-writer
 lm-sensors
 mercurial
+nfs-common
 octave
 openconnect
 openvpn
@@ -31,6 +33,7 @@ texlive-latex-extra
 texlive-science
 texstudio
 thunderbird
+transmission
 virtualbox
 vlc
 wireshark
