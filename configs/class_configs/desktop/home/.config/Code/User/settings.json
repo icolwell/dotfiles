@@ -1,0 +1,9 @@
+{
+    "editor.renderWhitespace": "all",
+    "cmake.configureOnOpen": false,
+    "files.trimTrailingWhitespace": true,
+    "editor.scrollBeyondLastLine": false,
+    "workbench.editor.tabSizing": "shrink",
+    "explorer.confirmDelete": false,
+    "files.insertFinalNewline": true
+}
