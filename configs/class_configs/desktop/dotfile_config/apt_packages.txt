@@ -26,7 +26,6 @@ openvpn
 pandoc
 pavucontrol
 pinta
-python-pip
 simplescreenrecorder
 texlive
 texlive-latex-extra
