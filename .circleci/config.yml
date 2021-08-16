@@ -1,13 +1,32 @@
-version: 2
-jobs:
-  build:
-    docker:
-      - image: iancolwell/ubuntu:bionic_desktop
-        environment:
-          CONTINUOUS_INTEGRATION: TRUE
+version: 2.1
+commands:
+  test_install:
     steps:
       - run: sudo apt-get -y install git openssh-client
       - checkout
       - run: mkdir -p "configs/sys_specific_configs/$HOSTNAME/dotfile_config"
       - run: echo "desktop" >> "configs/sys_specific_configs/$HOSTNAME/dotfile_config/class.txt"
       - run: bash scripts/initialize_system.bash
+
+jobs:
+  bionic_build:
+    docker:
+      - image: iancolwell/ubuntu:bionic_desktop
+        environment:
+          CONTINUOUS_INTEGRATION: TRUE
+    steps:
+      - test_install
+
+  focal_build:
+    docker:
+      - image: iancolwell/ubuntu:focal_desktop
+        environment:
+          CONTINUOUS_INTEGRATION: TRUE
+    steps:
+      - test_install
+
+workflows:
+  build_and_test:
+    jobs:
+      - bionic_build
+      - focal_build
