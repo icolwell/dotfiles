@@ -13,7 +13,7 @@ Additional Features
 - Easy support for host-specific configs.
 - debconf preconfiguration to avoid user input prompts during installation.
 
-NOTE: These dotfiles and scripts have only been tested on Ubuntu 18.04. It is
+NOTE: These dotfiles and scripts have been tested on Ubuntu 18.04 and Ubuntu 20.04. It is
 possible that they no longer work for 16.04 or other versions.
 
 ## Installation Instructions
@@ -124,7 +124,7 @@ See the [scripts README](scripts/README.md) for an explanation of the scripts.
 ## Continuous Integration Testing
 
 A [docker image](https://hub.docker.com/r/iancolwell/xenial_desktop/)
-that emulates a typical Ubuntu 16.04 desktop installation is used to
+that emulates a typical Ubuntu desktop installation is used to
 verify that all the installation scripts work as expected.
 
 The CI build logs can be found
