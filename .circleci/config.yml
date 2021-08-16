@@ -24,3 +24,9 @@ jobs:
           CONTINUOUS_INTEGRATION: TRUE
     steps:
       - test_install
+
+workflows:
+  build_and_test:
+    jobs:
+      - bionic_build
+      - focal_build
