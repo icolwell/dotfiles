@@ -36,6 +36,9 @@ configure_gsettings()
 	# Show date in clock view
 	gsettings set org.gnome.desktop.interface clock-show-date 'true'
 
+	# Show day of week in clock view
+	gsettings set org.gnome.desktop.interface clock-show-weekday 'true'
+
 	# Default apps
 	xdg-settings set default-web-browser opera.desktop
 }
