@@ -26,6 +26,10 @@ configure_gsettings()
 
 	# Small icon size in file browser
 	gsettings set org.gnome.nautilus.icon-view default-zoom-level 'small'
+	gsettings set org.gnome.nautilus.list-view default-zoom-level 'small'
+
+	# Tree view
+	gsettings set org.gnome.nautilus.list-view use-tree-view 'true'
 
 	# Icon size of dock apps
 	gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 36
