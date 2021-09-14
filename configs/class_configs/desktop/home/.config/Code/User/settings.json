@@ -2,6 +2,9 @@
     "editor.renderWhitespace": "all",
     "cmake.configureOnOpen": false,
     "files.trimTrailingWhitespace": true,
+    "[markdown]": {
+        "files.trimTrailingWhitespace": false
+    },
     "editor.scrollBeyondLastLine": false,
     "workbench.editor.tabSizing": "shrink",
     "explorer.confirmDelete": false,
