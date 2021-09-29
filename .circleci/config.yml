@@ -2,7 +2,7 @@ version: 2.1
 commands:
   test_install:
     steps:
-      - run: sudo apt-get -y install git openssh-client
+      - run: sudo apt-get update && sudo apt-get -y install git openssh-client
       - checkout
       - run: mkdir -p "configs/sys_specific_configs/$HOSTNAME/dotfile_config"
       - run: echo "desktop" >> "configs/sys_specific_configs/$HOSTNAME/dotfile_config/class.txt"
