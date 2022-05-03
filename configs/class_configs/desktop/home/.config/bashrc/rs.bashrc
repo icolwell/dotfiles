@@ -6,7 +6,7 @@
 rs()
 {
     ROS_VER="${1:-1}"
-    
+
     if [ "$ROS_VER" == "1" ]; then
         clear_ros_env
         # ROS1 env setup goes here
@@ -29,5 +29,9 @@ clear_ros_env()
 {
     for ros_env_var in $(env | grep ROS_ | cut -d "=" -f1); do
         unset "$ros_env_var"
+        unset CMAKE_PREFIX_PATH
+        unset COLCON_PREFIX_PATH
     done
 }
+
+# https://answers.ros.org/question/355967/ros2-sourcing-colcon-generated-setupbash-includes-ros1-catkin-workspace/
