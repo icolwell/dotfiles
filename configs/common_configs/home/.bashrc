@@ -168,8 +168,7 @@ define_aliases()
 application_specific()
 {
 	# ROS
-	source_file /opt/ros/melodic/setup.bash --extend
-	source_file ~/catkin_ws/devel/setup.bash --extend
+	rs 1
 	export ROSCONSOLE_FORMAT='[${severity}][${node}]: ${message}'
 
 	# GO
