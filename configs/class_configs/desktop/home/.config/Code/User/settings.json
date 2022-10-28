@@ -8,5 +8,8 @@
     "editor.scrollBeyondLastLine": false,
     "workbench.editor.tabSizing": "shrink",
     "explorer.confirmDelete": false,
-    "files.insertFinalNewline": true
+    "files.insertFinalNewline": true,
+    "explorer.confirmDragAndDrop": false,
+    "security.workspace.trust.untrustedFiles": "open",
+    "editor.insertSpaces": false
 }
