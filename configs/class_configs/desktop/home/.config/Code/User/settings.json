@@ -9,7 +9,12 @@
     "workbench.editor.tabSizing": "shrink",
     "explorer.confirmDelete": false,
     "files.insertFinalNewline": true,
+    "editor.autoClosingBrackets": "never",
+    "editor.insertSpaces": false,
     "explorer.confirmDragAndDrop": false,
+    "update.mode": "manual",
+    "explorer.autoReveal": false,
     "security.workspace.trust.untrustedFiles": "open",
-    "editor.insertSpaces": false
+    "diffEditor.ignoreTrimWhitespace": false,
+    "diffEditor.renderSideBySide": false
 }

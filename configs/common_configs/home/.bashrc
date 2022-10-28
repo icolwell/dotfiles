@@ -157,6 +157,10 @@ define_aliases()
 	alias catb='(cd ~/catkin_ws && catkin build --continue-on-failure)'
 	alias catc='(cd ~/catkin_ws && catkin clean -y)'
 
+	alias colb='colcon build --continue-on-error'
+	alias colbp='colcon build --packages-select'
+	alias colt='colcon test'
+
 	# Other
 	alias clang++=clang++-3.5
 	alias clang=clang-3.5
@@ -168,7 +172,7 @@ define_aliases()
 application_specific()
 {
 	# ROS
-	rs 1
+	rs 2
 	export ROSCONSOLE_FORMAT='[${severity}][${node}]: ${message}'
 
 	# GO
