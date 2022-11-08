@@ -1,4 +1,3 @@
-ctags
 expect
 git
 git-lfs
@@ -13,6 +12,9 @@ tmux
 tmux-plugin-manager
 traceroute
 tree
+universal-ctags
 unzip
 vim
+wireguard
+wireguard-tools
 whois

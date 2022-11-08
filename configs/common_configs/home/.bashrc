@@ -141,7 +141,7 @@ define_aliases()
 	alias upgrade='update && sudo apt-get upgrade'
 
 	# git aliases
-	alias gits='git status'
+	alias gits='git status && echo -e "\nStash:" && git stash list'
 	alias gita='git add -A . && git status'
 	alias gitc='git commit -m'
 	alias gituc='git reset HEAD~'
