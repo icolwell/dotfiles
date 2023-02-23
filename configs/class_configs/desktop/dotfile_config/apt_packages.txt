@@ -14,7 +14,7 @@ hunspell-en-ca
 inkscape
 josm
 jstest-gtk
-keepassx
+keepassxc
 libreoffice-calc
 libreoffice-writer
 lm-sensors
