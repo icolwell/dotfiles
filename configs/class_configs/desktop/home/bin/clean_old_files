@@ -1,9 +1,11 @@
 #!/bin/bash
 set -e
-# set -x
 
 TIME_LIMIT="30"
 LIST_PATH="$HOME/.clean_old_files/file_list"
+
+NO_CLR="\033[0m"
+RED="\033[1;31m"
 
 # Input flags:
 # -l = list all the files that are designated for removal
@@ -53,10 +55,18 @@ summary()
         return
     fi
 
-    echo "$NUM_OLD_FILES files were found that are older than $TIME_LIMIT days."
-    echo "These files will be deleted the next time you login unless they are moved."
-    echo "Files to be removed:"
+    FILES_TEXT="files were"
+    VERB="are"
+    if [ "$NUM_OLD_FILES" -eq 1 ]; then
+        FILES_TEXT="file was"
+        VERB="is"
+    fi
+
+    echo -e "$RED$NUM_OLD_FILES$NO_CLR $FILES_TEXT found that $VERB older than $TIME_LIMIT days."
     echo
+    echo "These files will be deleted the next time you login unless they are moved."
+    echo
+    echo "Files to be removed:"
 
     echo "$OLD_FILES" | head -n 10
     if [ "$NUM_OLD_FILES" -gt 10 ]; then
@@ -71,11 +81,7 @@ summary()
 
 remove_file_folder()
 {
-    if [ -d "$1" ]; then
-        rm -rf "$1"
-    elif [ -e "$1" ]; then
-        rm "$1"
-    fi
+    gio trash -f "$1"
 }
 
 remove_cache_files()
