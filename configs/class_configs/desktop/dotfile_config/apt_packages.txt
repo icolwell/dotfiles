@@ -4,7 +4,6 @@ clang
 clang-format
 default-jdk
 default-jre
-docker.io
 ffmpeg
 filezilla
 gimp
