@@ -1,12 +1,15 @@
 android-tools-adb
 ansible
 baobab
+btop
 clang
 clang-format
 default-jdk
 default-jre
+fd-find
 ffmpeg
 filezilla
+fzf
 gimp
 gnome-tweaks
 gpsprune
@@ -30,3 +33,4 @@ transmission
 vlc
 wireshark
 xclip
+xournalpp
